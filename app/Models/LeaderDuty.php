@@ -21,23 +21,4 @@ class LeaderDuty extends Model
             'withdrawn_ambassadors',
     ];
 
-    public function leader()
-    {
-        return $this->belongsTo(Leader::class);
-    }
-
-    public function supervisor()
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    public function week()
-    {
-        return $this->belongsTo(Week::class);
-    }
-
-    public function week_num() {
-        return $this->belongsTo('\App\Models\Week');
-    }
-
 }
