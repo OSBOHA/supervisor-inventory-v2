@@ -16,9 +16,7 @@
                     <li class="sidebar-item  has-sub">
                         <a href="#" class='sidebar-link'>
                             <h5><i class="bi bi-person-circle"></i></h5>
-                            <span>
-                                <h5> {{auth()->user()->name}} </h5>
-                            </span>
+
                     </li>
 
 
@@ -38,7 +36,7 @@
                     </li>
 
                     <li class="sidebar-item  ">
-                        <a href="{{route('leaderDuty.show',['id' => auth()->user()->id])}}" class='sidebar-link'>
+                        <a href="{{route('leaderDuty.show')}}"  class='sidebar-link'>
                             <i class="bi bi-receipt-cutoff"></i>
                             <span>عرض نتيجة الجرد</span>
                         </a>
