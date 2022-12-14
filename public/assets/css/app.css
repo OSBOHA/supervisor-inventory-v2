@@ -376,9 +376,7 @@ html, body{
 }
 
 .card .card-content {
-    position: relative;
-
-    border: solid #435ebe
+    position: relative
 }
 
 .card .card-title {
@@ -1849,20 +1847,6 @@ a {
     padding: 1rem 2rem
 }
 
-
 .icon-mid:before {
     vertical-align: middle
-}
-
-
-
-
-/* ****** ADDED STYLING ****** */
-
-.hero-bg-image {
-    background: url('../images/inventory-site-bg.png' )no-repeat  center top/cover;
-    background-attachment: scroll;
-    height: 1005px;;
-
-
 }
