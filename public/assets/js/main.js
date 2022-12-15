@@ -151,4 +151,3 @@ let sidebarEl = document.getElementById('sidebar');
 if (sidebarEl) {
   window.sidebar = new Sidebar(sidebarEl).init();
 }
-

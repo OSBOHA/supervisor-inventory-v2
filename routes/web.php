@@ -20,3 +20,13 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/duty', function () {
+    return view('duties.followup-team');
+});
+Route::get('/super', function () {
+    return view('duties.supervising-team');
+});
+Route::get('/superD', function () {
+    return view('duties.super-duties');
+});

@@ -17,7 +17,7 @@
                         <a href="#" class='sidebar-link'>
                             <h5><i class="bi bi-person-circle"></i></h5>
                             <span>
-                                <h5> {{auth()->user()->name}} </h5>
+                                <!-- <h5> NAME </h5> -->
                             </span>
                     </li>
 
@@ -31,35 +31,35 @@
                     </li>
 
                     <li class="sidebar-item ">
-                        <a href="{{route('leaderDuty.create')}}" class='sidebar-link'>
+                        <a href="" class='sidebar-link'>
                             <i class="bi bi-pencil-square"></i>
                             <span>الجرد لأسبوعي</span>
                         </a>
                     </li>
 
                     <li class="sidebar-item  ">
-                        <a href="{{route('leaderDuty.show',['id' => auth()->user()->id])}}" class='sidebar-link'>
+                        <a href="" class='sidebar-link'>
                             <i class="bi bi-receipt-cutoff"></i>
                             <span>عرض نتيجة الجرد</span>
                         </a>
 
                     </li>
                     <li class="sidebar-item  ">
-                        <a href="{{ route('createNotes') }}" class='sidebar-link'>
+                        <a href="" class='sidebar-link'>
                             <i class="bi bi-receipt-cutoff"></i>
                             <span>ملاحظـات مكررة</span>
                         </a>
                     </li>
 
                     <li class="sidebar-item ">
-                        <a href="{{route('objections.my_objections')}}" class='sidebar-link'>
+                        <a href="" class='sidebar-link'>
                             <i class="bi bi-exclamation-circle-fill"></i>
                             <span>صندوق اعتراضاتك</span>
                         </a>
                     </li>
 
                     <li class="sidebar-item  ">
-                        <a href="{{route('list_all_messages')}}" class='sidebar-link'>
+                        <a href="" class='sidebar-link'>
                             <i class="bi bi-chat-dots"></i>
                             <span>صندوق الرسائل</span>
                         </a>
