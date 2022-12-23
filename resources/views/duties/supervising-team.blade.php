@@ -187,6 +187,38 @@
                                     <div class="form-group">
                                         <h5>منشور مشاكل التقييم</h5>
                                         <div>
+                                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                                            <label class="form-check-label" for="exampleRadios1">
+                                                نشر
+                                            </label>
+                                        </div>
+
+                                        <div>
+                                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                                            <label class="form-check-label" for="exampleRadios1">
+                                                لم ينشر
+                                            </label>
+                                        </div>
+
+                                        <div>
+                                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                                            <label class="form-check-label" for="exampleRadios1">
+                                                تم بالنيابة
+                                            </label>
+                                        </div>
+
+                                        <div>
+                                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                                            <label class="form-check-label" for="exampleRadios1">
+                                                غير مستوفي المعايير
+                                            </label>
+                                        </div>
+
+                                        <hr />
+
+                                        <h6> المعايير التي لم يتم </h6>
+
+                                        <div>
                                             <input class="form-check-input" type="checkbox" name="exampleRadios" id="exampleRadios1" value="option1" checked>
                                             <label class="form-check-label" for="exampleRadios1">
                                                 نشره عند فتح الموقع
@@ -272,6 +304,19 @@
                         <div class="col-md-4 col-12">
                             <div class="form-group">
                                 <h5>منشور عضو جديد</h5>
+                                <div>
+                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1">
+                                    <label class="form-check-label" for="exampleRadios1">
+                                        تم المتابعة
+                                    </label>
+                                </div>
+                                <div>
+                                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1">
+                                    <label class="form-check-label" for="exampleRadios1">
+                                        نقص في المتابعة
+                                    </label>
+                                </div>
+                                <hr>
                                 <div>
                                     <input class="form-check-input" type="checkbox" name="exampleRadios" id="exampleRadios1" value="option1">
                                     <label class="form-check-label" for="exampleRadios1">

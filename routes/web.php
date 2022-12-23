@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,12 +22,15 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/duty', function () {
+Route::get('/leader/add', function () {
+    return view('leader.add');
+});
+Route::get('/duty/followup-team', function () {
     return view('duties.followup-team');
 });
-Route::get('/super', function () {
+Route::get('/duty/supervising-team', function () {
     return view('duties.supervising-team');
 });
-Route::get('/superD', function () {
+Route::get('/duty/super-duties', function () {
     return view('duties.super-duties');
 });

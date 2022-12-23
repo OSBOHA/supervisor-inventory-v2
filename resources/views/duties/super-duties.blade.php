@@ -109,10 +109,21 @@
                                                 تم التصويت بعد اغلاق الموقع
                                             </label>
                                         </div>
-                                    </div>
-                                </div>
 
-                                <!-- END SUPERVISOR READING -->
+                                        <hr />
+                                        <div>
+                                            <div class="form-group with-title mb-3">
+                                                <input type="text" class="form-control" id="exampleFormControlTextarea1">
+                                                <label>عدد صفحات قراءة المراقب [اختياري]</label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- END SUPERVISOR READING -->
 
                         </form>
                     </div>
