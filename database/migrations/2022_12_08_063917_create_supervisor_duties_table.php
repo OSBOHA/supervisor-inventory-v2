@@ -18,21 +18,17 @@ return new class extends Migration
             $table->integer('advisor_id');
             $table->integer('week_id');
             $table->integer('supervisor_id');
-            $table->integer('points');
-            $table->enum('follow_up_post',['published','didnt publish','published instead','incomplete']);
-            $table->enum('mark_problems_post',['published','didnt publish','published instead','incomplete']);
-            $table->enum('news',['published','didnt publish','incomplete']);
-            $table->enum('thursday_task',['done','not done','incomplete']);
-            $table->enum('final_mark_post',['published','didnt publish','incomplete']);
-            $table->enum('about_asboha_post',['published','didnt publish','incomplete']);            
-            $table->enum('supervisor_reading',['read','not read','incomplete', 'late', 'didnt vote']);
-            $table->text('withdrawn_ambassadors_post');
-            $table->text('new_ambassadors_post');
-            $table->text('returning_ambassadors_post');
-            $table->integer('team_final_mark');
             $table->integer('leader_members');
-            $table->integer('frozen_ambassadors');
-
+            $table->integer('team_final_mark');
+            $table->enum('follow_up_post',['published','didnt publish','published instead','incomplete']);
+            $table->enum('mark_problems_post',['published','didnt publish','published instead','incomplete']);            
+            $table->text('returning_ambassadors_post');
+            $table->text('new_ambassadors_post');
+            $table->text('withdrawn_ambassadors_post');
+            $table->enum('leader_training',['published','didnt publish','incomplete','none']);
+            $table->enum('discussion_post',['published','didnt publish','incomplete','none']);
+            $table->integer('points');
+            $table->integer('extra_points');
             $table->timestamps();
         });
     }

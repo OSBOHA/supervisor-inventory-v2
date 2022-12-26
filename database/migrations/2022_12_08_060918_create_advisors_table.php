@@ -16,7 +16,8 @@ return new class extends Migration
         Schema::create('advisors', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->string('name');
+            $table->string('team');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

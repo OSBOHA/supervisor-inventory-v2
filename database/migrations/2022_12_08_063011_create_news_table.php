@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('news', function (Blueprint $table) {
             $table->id();
-            $table->integer('week_id');
             $table->string('title');
             $table->timestamps();
         });
