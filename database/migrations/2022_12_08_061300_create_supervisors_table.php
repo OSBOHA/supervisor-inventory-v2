@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('team')->nullable();
             $table->integer('current_advisor')->nullable();
             $table->integer('previous_advisor')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -13,16 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('repeated_notes', function (Blueprint $table) {
+        Schema::create('supervisor_tasks', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->integer('leader_id');
-            $table->string('user_type');
+            $table->integer('advisor_id');
             $table->integer('week_id');
-            $table->integer('didnt_publish_news')->default(0);
-            $table->integer('post_late')->default(0);
-            $table->integer('deputized_for')->default(0);
-            $table->integer('light_week')->default(0);
+            $table->integer('supervisor_id');
+            $table->boolean('thursday_task');
+            $table->boolean('final_mark_confirm');
+            $table->boolean('final_mark_screenshot');
+            $table->enum('supervisor_reading',['read','not read', 'late', 'didnt vote']);
             $table->timestamps();
         });
     }
@@ -34,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('repeated_notes');
+        Schema::dropIfExists('supervisor_tasks');
     }
 };
