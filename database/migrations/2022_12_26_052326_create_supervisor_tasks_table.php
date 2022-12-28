@@ -22,6 +22,9 @@ return new class extends Migration
             $table->boolean('final_mark_confirm');
             $table->boolean('final_mark_screenshot');
             $table->enum('supervisor_reading',['read','not read', 'late', 'didnt vote']);
+            $table->integer('no_of_pages')->default(0);
+            $table->integer('points')->default(0);
+            $table->integer('extra_points')->default(0);
             $table->timestamps();
         });
     }

@@ -27,8 +27,8 @@ return new class extends Migration
             $table->text('withdrawn_ambassadors_post');
             $table->enum('leader_training',['published','didnt publish','incomplete','none']);
             $table->enum('discussion_post',['published','didnt publish','incomplete','none']);
-            $table->integer('points');
-            $table->integer('extra_points');
+            $table->integer('points')->default(0);
+            $table->integer('extra_points')->default(0);
             $table->timestamps();
         });
     }
