@@ -19,8 +19,8 @@
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.css')}}">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="{{('assets/css/widgets/chat.css')}}">
-    <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+    <!-- <link rel="stylesheet" href="{{('assets/css/widgets/chat.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/style.css')}}"> -->
     <link rel="stylesheet" href="{{asset('assets/vendors/perfect-scrollbar/perfect-scrollbar.css')}}">
     <link rel="stylesheet" href="{{asset('assets/vendors/bootstrap-icons/bootstrap-icons.css')}}">
     <link rel="stylesheet" href="{{asset('assets/css/app.rtl.css')}}">
@@ -65,8 +65,6 @@ body{
                     console.error(error);
                 });
         </script> --}}
-        <script src="{{asset('assets/js/leaderduty.js')}}"></script>
-        <script src="{{asset('assets/js/extrawork.js')}}"></script>
         <script src="{{asset('assets/js/pages/form-element-select.js')}}"></script>
         <script src="{{asset('assets/js/mazer.js')}}"></script>
         <script src="{{asset('assets/vendors/choices.js/choices.min.js')}}"></script>

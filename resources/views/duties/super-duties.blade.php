@@ -1,4 +1,9 @@
 @extends('layouts.app')
+<style>
+    .validation-alert {
+        display: none;
+    }
+</style>
 
 @section('page_title')
 <div class="row" style="direction: rtl">
@@ -114,24 +119,34 @@
                                                     تم التصويت بعد اغلاق الموقع
                                                 </label>
                                             </div>
+                                            <!-- START VALIDATION  -->
+                                            <div class="alert alert-danger mt-2 p-2 opacity-50 validation-alert" role="alert" id="supervisor_reading_required">
+                                                هذا الحقل مطلوب
+                                            </div>
+                                            <!-- END VALIDATION  -->
+
                                         </div>
                                         <hr />
                                         <div>
                                             <div class="form-group with-title mb-3">
                                                 <input type="text" class="form-control" id="no_of_pages" name="no_of_pages">
                                                 <label>عدد صفحات قراءة المراقب [اختياري]</label>
+                                                <div class="alert alert-danger mt-2 p-2 opacity-50 validation-alert" role="alert" id="no_of_pages_number">
+                                                    يجب أن تكون قيمة الحقل عددية
+                                                </div>
+                                                <!-- END VALIDATION  -->
+
                                             </div>
+
                                         </div>
 
                                     </div>
-
                                 </div>
-                            </div>
 
-                            <!-- END SUPERVISOR READING -->
-                            <div class="form-group col-12" style="margin-top:10px">
-                                <button type='submit' id="submit-btn" class="btn btn-primary w-100">حفظ</button>
-                            </div>
+                                <!-- END SUPERVISOR READING -->
+                                <div class="form-group col-12" style="margin-top:10px">
+                                    <button type='submit' id="submit-btn" class="btn btn-primary w-100">حفظ</button>
+                                </div>
 
                         </form>
                     </div>
@@ -140,41 +155,21 @@
         </div>
         <!-- END SUPERVISOR DUTIES FORM -->
 
-        <!-- START SUPERVISOR DUTIES IMAGE -->
-        <div class="col-12" id="super_duties_image">
-            <div class="card">
-                <div class="card-content">
-                    <img src="https://picsum.photos/300" class="w-100">
-                </div>
-            </div>
-
-        </div>
-        <!-- END SUPERVISOR DUTIES IMAGE -->
-
     </div>
     </div>
 </section>
-<script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js"></script>
-<script>
-    $("#select_form").change(function() {
-        $("#supervisor_id").val($("#select_form").find(":selected").val());
-        $("#super_duties_form").show();
-        $("#super_duties_image").hide();
+        <!-- START SUPERVISOR DUTIES IMAGE -->
+        <div class="col-12" id="super_duties_image">
+    <div class="card">
+        <div class="card-content">
+            <img src="https://picsum.photos/300" class="w-100">
+        </div>
+    </div>
 
-    });
-    const validation = new JustValidate('#form');
-    validation
-        .addRequiredGroup(
-            '#supervisor_reading',
-            'يجب تحديد قراءة المراقب'
-        )
-        .addField('#no_of_pages', [{
-            rule: 'number',
-            errorMessage: 'أدخل رقمًا',
-        }, ])
-        .onSuccess((event) => {
-            console.log('Validation passes and form submitted', event);
-        });;
-</script>
+</div>
+<!-- END SUPERVISOR DUTIES IMAGE -->
+
+
+<script src="{{asset('assets/js/validation/superviserDuties-formValidation.js')}}"></script>
 
 @endsection

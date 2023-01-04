@@ -32,9 +32,11 @@ return new class extends Migration
             $table->enum('final_mark',['published','didnt publish','published instead']);
             $table->enum('audit_final_mark',['done','not done','untargeted']);
             $table->enum('withdrawn_ambassadors',['done','not done','no withdrawal']);
+            $table->integer('withdrawn_ambassadors_No')->default(0);
             $table->enum('leader_reading',['read','not read','late', 'didnt vote']);
-            $table->integer('points');
-            $table->integer('extra_points');
+            $table->integer('about_leader')->nullable();
+            $table->integer('points')->default(0);
+            $table->integer('extra_points')->default(0);
             $table->timestamps();
         });
     }
