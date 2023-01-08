@@ -27,16 +27,13 @@ class LeaderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
-    {
-       
+    public function create(Request $request){
         $validator = Validator::make($request->all(), [
             'team' => 'required',
             'name' => 'required',
             'type' => 'required',
 
         ]);
-
         if ($validator->fails()) {
             return $this->jsonResponseWithoutMessage($validator->errors(), 'data', 500);
         }
