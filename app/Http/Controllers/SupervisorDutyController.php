@@ -11,21 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class SupervisorDutyController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -38,13 +24,12 @@ class SupervisorDutyController extends Controller
 
         ]);
         if ($validator->fails()) {
-            //return $this->jsonResponseWithoutMessage($validator->errors(), 'data', 500);
+            echo "validator errors";
         }
         $request['advisor_id'] = 1;//Auth::id(); 
         supervisorDuty::create($request->all());
         $this->add_points($request['supervisor_id'], $request['advisor_id']);
-        echo "ok";
-        //return $this->jsonResponseWithoutMessage("leader Craeted Successfully", 'data', 200);
+        echo "leader Craeted Successfully";
     }
     public function add_points($supervisor_id,$advisor_id){
         $points = 0;
@@ -72,7 +57,6 @@ class SupervisorDutyController extends Controller
         }
         
     }
-
    
     public function update(Request $request)
     {
@@ -85,8 +69,7 @@ class SupervisorDutyController extends Controller
 
         ]);
         if ($validator->fails()) {
-            echo "errors";
-           // return $this->jsonResponseWithoutMessage($validator->errors(), 'data', 500);
+            echo "validator errors";
         }
         
          $supervisor = supervisorDuty::where('advisor_id', 1)->where('supervisor_id', $request->supervisor_id)->first();
@@ -94,12 +77,10 @@ class SupervisorDutyController extends Controller
             $supervisor->update($request->all());
             $this->add_points($request['supervisor_id'], 1);//Auth::id();
             echo "supervisor info Updated Successfully";
-           // return $this->jsonResponseWithoutMessage("leader info Updated Successfully", 'data', 200);
         }
         
         else{
-            echo"NotFound";
-           // throw new NotFound;  
+            echo "NotFound";
         }
     }
 
