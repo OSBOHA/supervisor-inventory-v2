@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-
+use App\Http\Controllers\SupervisorDutyController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -34,3 +34,13 @@ Route::get('/duty/supervising-team', function () {
 Route::get('/duty/super-duties', function () {
     return view('duties.super-duties');
 });
+
+######## Supervising task and duties ########
+Route::controller(SupervisorDutyController::class)->prefix('supervising')->group(function () { 
+    Route::get('/team','supervisingTeam')->name('supervisingTeam');
+    Route::post('/teamStore','supervisingTeamStore')->name('supervisingTeam.store');
+    Route::get('/duties','supervisorDuty')->name('supervisorDuty');
+    Route::post('/dutyStore','supervisorDutyStore')->name('supervisorDuty.store');
+});
+
+

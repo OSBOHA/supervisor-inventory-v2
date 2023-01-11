@@ -25,9 +25,9 @@
                             <div class="input-group mb-3 ">
                                 <select class="form-select" id="select_supervisor">
                                     <option selected>المراقبون في فريقي</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                    @foreach ($supervisors as $supervisor)
+                                        <option value="{{$supervisor->id}}">{{$supervisor->user->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </form>
@@ -43,10 +43,9 @@
 
 <section id="multiple-column-form">
     <div class="row match-height" id="supervisor_duties_form" style="display: none;">
-        <form action="" id="form" method="post">
-            @csrf
-            <input class="form-check-input" type="hidden" name="supervisor_id" id="supervisor_id" value="0">
-
+        <form action="{{route('supervisingTeam.store')}}" method="POST" enctype="multipart/form-data" >
+        @csrf
+            <input class="form-check-input" type="hidden" name="supervisor_id" id="supervisor_id" value="{{$supervisor->id}}">
             <!-- START TEAM iNFO -->
             <div class="col-12">
                 <div class="card">
@@ -62,7 +61,7 @@
                                     <div class="form-group has-icon-left">
                                         <h6> عدد القادة</h6>
                                         <div class="position-relative">
-                                            <input type="tesxt" class="form-control" placeholder=" عدد القادة" id="leader_members">
+                                            <input type="tesxt" class="form-control" placeholder=" عدد القادة" id="leader_members" name="leader_members">
                                             <div class="form-control-icon">
                                                 <i class="bi bi-person"></i>
                                             </div>
@@ -73,7 +72,7 @@
                                     <div class="form-group has-icon-left">
                                         <h6> معدل الفريق</h6>
                                         <div class="position-relative">
-                                            <input type="text" class="form-control" placeholder=" معدل الفريق" id="team_final_mark">
+                                            <input type="text" class="form-control" placeholder=" معدل الفريق" id="team_final_mark" name="team_final_mark">
                                             <div class="form-control-icon">
                                                 <i class="bi bi-bar-chart-fill"></i>
                                             </div>
@@ -266,7 +265,7 @@
                                 </div>
                                 <!-- END EVALUATION PROBLEMS POST -->
 
-        </form>
+
     </div>
     </div>
     </div>
