@@ -9,24 +9,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 
 
-
 class LeaderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function create(Request $request){
         $validator = Validator::make($request->all(), [
             'team' => 'required',
@@ -105,8 +90,7 @@ class LeaderController extends Controller
             'type' => 'required_without:supervisor_id,advisor_id',
         ]);
         if ($validator->fails()) {
-            echo "errors";
-            //return $this->jsonResponseWithoutMessage($validator->errors(), 'data', 500);
+            echo "validator errors";
         }
         if($request->has('supervisor_id'))
             $leader = leader::where('supervisor_id', $request->supervisor_id)->get();
@@ -116,44 +100,28 @@ class LeaderController extends Controller
             $leader = leader::where('type', $request->type)->get();
         if($leader->isNotEmpty()){
             echo $leader; 
-           // return $this->jsonResponseWithoutMessage(RateResource::collection($rate), 'data',200);
         }
         else{
             throw new NotFound;
         }
 
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'leader_id' => 'required',
         ]);
         if ($validator->fails()) {
-            echo "errors";
-
-           // return $this->jsonResponseWithoutMessage($validator->errors(), 'data', 500);
+            echo "validator errors";
         }
-       // if(Auth::user()->can('edit leader')){
          $leader = leader::where('supervisor_id', 1)->where('id', $request->leader_id)->first();
-        //}
          if($leader){
             $leader->update($request->all());
             echo "leader info Updated Successfully";
-           // return $this->jsonResponseWithoutMessage("leader info Updated Successfully", 'data', 200);
         }
         else{
             echo"NotFound";
-           // throw new NotFound;  
         }
-        
     }
 
 }
