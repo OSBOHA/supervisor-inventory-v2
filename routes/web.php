@@ -22,50 +22,17 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-
-
-
-
-############# LEADER DUTY ############# 
-Route::group(['prefix' => 'duty'], function () {
-    Route::get('/followup-team', function () {
-        return view('duties.followup-team');
-    });
-    Route::get('/supervising-team', function () {
-        return view('duties.supervising-team');
-    });
-    Route::get('/display-supervising-team', function () {
-        return view('duties.display-supervising-team');
-    });
-    Route::get('/super-duties', function () {
-        return view('duties.super-duties');
-    });
-    });
-############# END LEADER DUTY ############# 
-
-############# END LEADERS ############# 
-Route::group(['prefix' => 'leaders'], function () {
-    Route::get('/list-all', function () {
-        return view('leader.lis-all');
-    });
-    Route::get('/list-one', function () {
-        return view('leader.list-one');
-    });
-    Route::get('/list-by', function () {
-        return view('leader.list-all-by');
-    });
-    Route::get('/add', function () {
-        return view('leader.add');
-    });
+Route::get('/leader/add', function () {
+    return view('leader.add');
 });
-############# END LEADERS ############# 
-
-
-Route::get('/supervisors/list-all', function () {
-    return view('supervisor.lis-all');
+Route::get('/duty/followup-team', function () {
+    return view('duties.followup-team');
 });
-Route::get('/supervisors/list-one', function () {
-    return view('supervisor.list-one');
+Route::get('/duty/supervising-team', function () {
+    return view('duties.supervising-team');
+});
+Route::get('/duty/super-duties', function () {
+    return view('duties.super-duties');
 });
 
 ######## Supervising task and duties ########
