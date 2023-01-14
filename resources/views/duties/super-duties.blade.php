@@ -31,9 +31,9 @@
                             <div class="input-group mb-3 ">
                                 <select class="form-select" id="select_supervisor">
                                     <option selected>المراقبون في فريقي</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                    @foreach ($supervisors as $supervisor)
+                                        <option value="{{$supervisor->id}}">{{$supervisor->user->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </form>
@@ -57,8 +57,8 @@
                 </div>
                 <div class="card-content">
                     <div class="card-body">
-                        <form action="#" id="form" method="post">
-                            @csrf
+                    <form action="{{route('supervisorDuty.store')}}" method="POST" enctype="multipart/form-data" >
+                    @csrf
                             <div class="row">
                                 <input class="form-check-input" type="hidden" name="supervisor_id" id="supervisor_id" value="0">
                                 <!-- START SUPERVISOR DUTIES -->
@@ -108,13 +108,13 @@
                                             </div>
 
                                             <div>
-                                                <input class="form-check-input" type="radio" name="supervisor_reading" id="supervisor_reading_3" value="late">
+                                                <input class="form-check-input" type="radio" name="supervisor_reading" id="supervisor_reading_3" value="didnt vote">
                                                 <label class="form-check-label" for="supervisor_reading_3">
                                                     قرأ ولم يصوت
                                                 </label>
                                             </div>
                                             <div>
-                                                <input class="form-check-input" type="radio" name="supervisor_reading" id="supervisor_reading_4" value="didnt vote">
+                                                <input class="form-check-input" type="radio" name="supervisor_reading" id="supervisor_reading_4" value="late">
                                                 <label class="form-check-label" for="supervisor_reading_4">
                                                     تم التصويت بعد اغلاق الموقع
                                                 </label>
