@@ -1,5 +1,5 @@
 <?php
-
+//point??
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -74,8 +74,8 @@ class SupervisorDutyController extends Controller
         if($request->new_ambassadors_post == 'تم المتابعة'){
             $points += 5; 
         } else {
-            $new_ambassadors_post = implode(",",$request->new_ambassadors_post_incomplete);
-            if ( count($request->new_ambassadors_post_incomplete) == 1) {
+            $new_ambassadors_post =($request->new_ambassadors_post_incomplete)? implode(",",$request->new_ambassadors_post_incomplete) : '';
+            if ($request->new_ambassadors_post_incomplete && count($request->new_ambassadors_post_incomplete) == 1) {
                 $points += (in_array('متابعة التواصل مع السفراء الجدد', $request->new_ambassadors_post_incomplete))? 2 : 3;
             }
         }
