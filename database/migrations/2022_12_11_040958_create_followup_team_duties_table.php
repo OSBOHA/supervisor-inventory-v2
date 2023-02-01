@@ -20,6 +20,8 @@ return new class extends Migration
             $table->integer('supervisor_id');
             $table->integer('last_edit_by')->nullable();
             //$table->integer('user_id');
+            $table->integer('last_update_by')->nullable();
+            $table->integer('user_id');
             $table->integer('team_final_mark');
             $table->integer('team_members');
             $table->enum('follow_up_post',['published','didnt publish','published instead','incomplete']);
