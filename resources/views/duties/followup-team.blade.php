@@ -30,9 +30,9 @@
                             <div class="input-group mb-3 ">
                                 <select class="form-select" id="inputGroupSelect01">
                                     <option selected>القادة في فريقي</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                    @foreach ($leaders as $leader)
+                                        <option value="{{$leader->id}}">{{$leader->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </form>
@@ -48,8 +48,8 @@
 
 <section id="multiple-column-form">
     <div class="row match-height" id="followup_team_duties_form" style="display: none;">
-        <form action="#" id="form" method="post">
-            @csrf
+        <form action="{{route('followupTeam.store')}}" id="form" method="post">
+            @csrf 
             <input class="form-check-input" type="hidden" name="leader_id" id="leader_id" value="0">
 
             <!-- START TEAM iNFO -->
@@ -65,7 +65,7 @@
                                     <div class="form-group has-icon-left">
                                         <h6> عدد السفراء</h6>
                                         <div class="position-relative">
-                                            <input type="text" class="form-control" placeholder=" عدد السفراء" id="team_members">
+                                            <input name="team_members" type="text" class="form-control" placeholder=" عدد السفراء" id="team_members">
                                             <div class="form-control-icon">
                                                 <i class="bi bi-person"></i>
                                             </div>
@@ -85,7 +85,7 @@
                                     <div class="form-group has-icon-left">
                                         <h6> معدل الفريق</h6>
                                         <div class="position-relative">
-                                            <input type="text" class="form-control" placeholder=" معدل الفريق" id="team_final_mark">
+                                            <input name="team_final_mark" type="text" class="form-control" placeholder=" معدل الفريق" id="team_final_mark">
                                             <div class="form-control-icon">
                                                 <i class="bi bi-bar-chart-fill"></i>
                                             </div>
@@ -331,7 +331,7 @@
                                         </div>
 
                                         <div>
-                                            <input class="form-check-input" type="radio" name="zero_mark" id="zero_mark_2" value="option1">
+                                            <input class="form-check-input" type="radio" name="zero_mark" id="zero_mark_2" value="0">
                                             <label class="form-check-label" for="zero_mark_2">
                                                 لا يوجد
                                             </label>
@@ -461,7 +461,7 @@
                                     <div class="form-group">
                                         <h5> مهمة الجمعة</h5>
                                         <div>
-                                            <input class="form-check-input" type="radio" name="friday_task" id="friday_task_1" value="`1`">
+                                            <input class="form-check-input" type="radio" name="friday_task" id="friday_task_1" value="1">
                                             <label class="form-check-label" for="friday_task_1">
                                                 تمت
                                             </label>

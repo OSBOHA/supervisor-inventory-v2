@@ -18,6 +18,8 @@ return new class extends Migration
             $table->integer('leader_id');
             $table->integer('week_id');
             $table->integer('supervisor_id');
+            $table->integer('last_edit_by')->nullable();
+            //$table->integer('user_id');
             $table->integer('last_update_by')->nullable();
             $table->integer('user_id');
             $table->integer('team_final_mark');

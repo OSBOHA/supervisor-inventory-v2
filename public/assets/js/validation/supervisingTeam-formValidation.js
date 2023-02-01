@@ -257,7 +257,15 @@ document.querySelector('#form').addEventListener('submit', function (e) {
 
     }
 else{
-    console.log('error')
+    isLeaderMembersValid() ;
+    isTeamFinalMarkValid() ;
+    isFollowUpPostValid() ;
+    isMarkProblemsPostValid() ;
+    isReturningAmbassadorsPostValid() ;
+    isNewAmbassadorsPostValid() ;
+    isWithdrawnAmbassadorsPostValid() ;
+    isDiscussionPostValid();
+    console.log('hi');
 }
 
 });

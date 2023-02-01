@@ -283,9 +283,99 @@ function isLeaderTrainingValid() {
         return true
     }
 }
+//####### END final_mark VALIDATION #######// 
+
+//####### START leader_training VALIDATION #######// 
+$('[name="leader_training"]').click(function () {
+    $("#leader_training_required").css("display", "none");
+});
+function isLeaderTrainingValid() {
+    if ($('input[name="leader_training"]:checked').length <= 0) {
+        $("#leader_training_required").css("display", "block");
+        return false;
+    } else {
+        $("#leader_training_required").css("display", "none");
+        return true
+    }
+}
 //####### END leader_training VALIDATION #######// 
 
 
+//####### START final_mark VALIDATION #######// 
+$('[name="final_mark"]').click(function () {
+    $("#final_mark_required").css("display", "none");
+});
+function isFinalMarkValid() {
+    if ($('input[name="final_mark"]:checked').length <= 0) {
+        $("#final_mark_required").css("display", "block");
+        return false;
+    } else {
+        $("#final_mark_required").css("display", "none");
+        return true
+    }
+}
+//####### END final_mark VALIDATION #######// 
+
+//####### START audit_final_mark VALIDATION #######// 
+$('[name="audit_final_mark"]').click(function () {
+    $("#audit_final_mark_required").css("display", "none");
+});
+function isAuditFinalMarkValid() {
+    if ($('input[name="audit_final_mark"]:checked').length <= 0) {
+        $("#audit_final_mark_required").css("display", "block");
+        return false;
+    } else {
+        $("#audit_final_mark_required").css("display", "none");
+        return true
+    }
+}
+//####### END audit_final_mark VALIDATION #######// 
+
+//####### START withdrawn_ambassadors VALIDATION #######// 
+$('[name="withdrawn_ambassadors"]').click(function () {
+    $("#withdrawn_ambassadors_required").css("display", "none");
+
+    if ($('#withdrawn_ambassadors_1').is(':checked')) {
+        isWithdrawnAmbassadorsNoValid();
+        $('.withdrawn_ambassadors_No').removeAttr('disabled');
+        $('.withdrawn_ambassadors_message').removeAttr('disabled');
+    } else {
+        $('#withdrawn_ambassadors_No').val('');
+        $('.withdrawn_ambassadors_No').attr('disabled', 'disabled');
+        $('#withdrawn_ambassadors_message').val('');
+        $('.withdrawn_ambassadors_message').attr('disabled', 'disabled');
+    }
+});
+$("#frozen_ambassadors_NO").change(function () {
+    if (!isWithdrawnAmbassadorsNoValid()) {
+        if ($('#frozen_ambassadors_NO').val() === '') {
+            $("#frozen_ambassadors_NO_required").css("display", "block");
+            $("#frozen_ambassadors_NO_number").css("display", "none");
+        } else {
+            $("#frozen_ambassadors_NO_number").css("display", "block");
+            $("#frozen_ambassadors_NO_required").css("display", "none");
+        }
+    } else {
+        $("#frozen_ambassadors_NO_required").css("display", "none");
+        $("#frozen_ambassadors_NO_number").css("display", "none");
+    }
+});
+
+function isWithdrawnAmbassadorsNoValid() {
+    return ($('#withdrawn_ambassadors_No').val() != '' && $.isNumeric($('#withdrawn_ambassadors_No').val()));
+}
+
+function isWithdrawnAmbassadorsValid() {
+    if ($('input[name="withdrawn_ambassadors"]:checked').length <= 0) {
+        $("#withdrawn_ambassadors_required").css("display", "block");
+        return false;
+    } else {
+        $("#withdrawn_ambassadors_required").css("display", "none");
+        return true
+    }
+}
+
+//####### END withdrawn_ambassadors VALIDATION #######// 
 
 
 
@@ -359,7 +449,9 @@ document.querySelector('#form').addEventListener('submit', function (e) {
         isThursdayTaskValid() &&
         isFridayTaskValid() &&
         isDiscussionPostValid() &&
-        isLeaderTrainingValid()
+        isLeaderTrainingValid() &&
+        isFinalMarkValid() &&
+        isAuditFinalMarkValid() 
     ) {
         $(this).submit();
 
@@ -375,8 +467,10 @@ document.querySelector('#form').addEventListener('submit', function (e) {
         isFridayTaskValid();
         isDiscussionPostValid();
         isLeaderTrainingValid();
+        isFinalMarkValid();
+        isAuditFinalMarkValid();
 
-        console.log('error')
+        console.log('hi')
     }
 
 });
