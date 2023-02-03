@@ -17,30 +17,22 @@
                                 <th>اسم القائد </th>
                                 <th>اسم الفريق</th>
                                 <th>عدد السفراء </th>
-                                <th>.....</th>
+                                <th>تعديل حذف</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($leaders as $leader)
                             <tr>
-                                <td> 1 </td>
-                                <td>TITLE </td>
-                                <td>TITLE </td>
-                                <td>TITLE </td>
+                                <td>#</td>
+                                <td>{{$leader->name}} </td>
+                                <td>{{$leader->team}}</td>
+                                <td>10</td>
                                 <td>
                                     <span class="badge bg-success">تعديل</span>
                                     <span class="badge bg-success">نقل</span>
                                 </td>
                             </tr>
-                            <tr>
-                                <td> 2 </td>
-                                <td>TITLE </td>
-                                <td>TITLE </td>
-                                <td>TITLE </td>
-                                <td>
-                                    <span class="badge bg-success">تعديل</span>
-                                    <span class="badge bg-success">نقل</span>
-                                </td>
-                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
