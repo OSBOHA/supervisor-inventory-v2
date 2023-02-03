@@ -82,7 +82,7 @@ class LeaderController extends Controller
         }
     }
 
-    public function show(Request $request)
+    public function listBy(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'supervisor_id' => 'required_without:advisor_id,type',
@@ -90,20 +90,27 @@ class LeaderController extends Controller
             'type' => 'required_without:supervisor_id,advisor_id',
         ]);
         if ($validator->fails()) {
-            echo "validator errors";
+            echo "errors";
+            //return $this->jsonResponseWithoutMessage($validator->errors(), 'data', 500);
         }
         if($request->has('supervisor_id'))
-            $leader = leader::where('supervisor_id', $request->supervisor_id)->get();
+            $leaders = leader::where('supervisor_id', $request->supervisor_id)->get();
         else if($request->has('advisor_id'))
-            $leader = leader::where('advisor_id', $request->advisor_id)->get();
+            $leaders = leader::where('advisor_id', $request->advisor_id)->get();
         else if($request->has('type'))
-            $leader = leader::where('type', $request->type)->get();
-        if($leader->isNotEmpty()){
-            echo $leader; 
+            $leaders = leader::where('type', $request->type)->get();
+        if($leaders->isNotEmpty()){
+            return view('leader.list-all-by', compact('leaders'));
         }
         else{
-            throw new NotFound;
+            echo "not found";
         }
+       
+    }
+    public function listAll()
+    {
+        $leaders = leader::get();
+        return view('leader.lis-all', compact('leaders'));
 
     }
     public function update(Request $request)

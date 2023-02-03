@@ -23,7 +23,13 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::controller(LeaderController::class)->prefix('leader')->group(function () { 
+    Route::get('/listAll','listAll')->name('listAll');
+    Route::get('/listBySupervisor','listBy')->name('listBySupervisor');
+    Route::get('/listByAdvisor', 'listBy')->name('listByAdvisor');
+    Route::get('/listByType','listBy')->name('listByType');
 
+});
 
 
 
@@ -76,6 +82,8 @@ Route::controller(SupervisorDutyController::class)->prefix('supervising')->group
     Route::post('/teamStore','supervisingTeamStore')->name('supervisingTeam.store');
     Route::get('/duties','supervisorDuty')->name('supervisorDuty');
     Route::post('/dutyStore','supervisorDutyStore')->name('supervisorDuty.store');
+    Route::get('/followupTeamduty','followupTeamDuty')->name('followupTeamDuty');
+    Route::post('/followupTeamDutyStore','followupTeamDutyStore')->name('followupTeamDuty.store');
 });
 
 ######## Followup team  ########
