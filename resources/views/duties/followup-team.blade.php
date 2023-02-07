@@ -3,6 +3,12 @@
     .validation-alert {
         display: none;
     }
+    .card-header-bg{
+        background-color:#dce7f1  !important;
+    }
+    .card-header-text{
+        color:#0E3744;
+    }
 </style>
 @section('page_title')
 <div class="row" style="direction: rtl">
@@ -16,8 +22,8 @@
 <!-- START SELECT LEADER -->
 <div class="col-12">
     <div class="card">
-        <div class="card-header" style="background:#dce7f1;">
-            <h4 class="card-title">القادة في فريقي </h4>
+        <div class="card-header card-header-bg">
+            <h4 class="card-title card-header-text">القادة في فريقي </h4>
         </div>
 
         <div class="card-content">
@@ -55,8 +61,8 @@
             <!-- START TEAM iNFO -->
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header" style="background:#dce7f1;">
-                        <h4 class="card-title"> معدل الفريق وعدد أعضاءه</h4>
+                    <div class="card-header card-header-bg">
+                        <h4 class="card-title card-header-text"> معدل الفريق وعدد أعضاءه</h4>
                     </div>
                     <div class="card-content">
                         <div class="card-body">
@@ -112,8 +118,8 @@
             <!-- START TEAM POSTS -->
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header" style="background:#dce7f1;">
-                        <h4 class="card-title"> المنشورات الأساسية</h4>
+                    <div class="card-header card-header-bg">
+                        <h4 class="card-title card-header-text"> المنشورات الأساسية</h4>
                     </div>
                     <div class="card-content">
                         <div class="card-body">
@@ -312,8 +318,8 @@
             <!-- START FREEZ AND ZEROS -->
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header" style="background:#dce7f1;">
-                        <h4 class="card-title"> حالة السفراء</h4>
+                    <div class="card-header card-header-bg">
+                        <h4 class="card-title card-header-text"> حالة السفراء</h4>
                     </div>
                     <div class="card-content">
                         <div class="card-body">
@@ -424,8 +430,8 @@
             <!-- START THURSDAY AND FRIDAY -->
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header" style="background:#dce7f1;">
-                        <h4 class="card-title"> مهمة الخميس والجمعة</h4>
+                    <div class="card-header card-header-bg">
+                        <h4 class="card-title card-header-text"> مهمة الخميس والجمعة</h4>
                     </div>
                     <div class="card-content">
                         <div class="card-body">
@@ -491,8 +497,8 @@
             <!-- START NEWS -->
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header" style="background:#dce7f1;">
-                        <h4 class="card-title"> إيصال الأخبار</h4>
+                    <div class="card-header card-header-bg">
+                        <h4 class="card-title card-header-text"> إيصال الأخبار</h4>
                     </div>
                     <div class="card-content">
                         <div class="card-body">
@@ -588,8 +594,8 @@
             <!-- START FINAL MARKS -->
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header" style="background:#dce7f1;">
-                        <h4 class="card-title"> العلامات النهائية</h4>
+                    <div class="card-header card-header-bg">
+                        <h4 class="card-title card-header-text"> العلامات النهائية</h4>
                     </div>
                     <div class="card-content">
                         <div class="card-body">
@@ -692,8 +698,8 @@
             <!-- START WITHDRAWN AND LEADER READING -->
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header" style="background:#dce7f1;">
-                        <h4 class="card-title"> المنسحبين - قراءة القائد </h4>
+                    <div class="card-header card-header-bg">
+                        <h4 class="card-title card-header-text"> المنسحبين - قراءة القائد </h4>
                     </div>
                     <div class="card-content">
                         <div class="card-body">
@@ -828,12 +834,8 @@
 
 
 <!-- START SUPERVISOR DUTIES IMAGE -->
-<div class="col-12" id="leaders_duties_image">
-    <div class="card">
-        <div class="card-content">
-            <img src="https://picsum.photos/300" class="w-100">
-        </div>
-    </div>
+<div class="col-lg-6 col-sm-12 d-flex justify-content-center m-auto" id="leaders_duties_image">
+            <img src="{{asset('assets/images/follwoup-team-report.png')}}" class="w-100">
 
 </div>
 <!-- END SUPERVISOR DUTIES IMAGE -->
