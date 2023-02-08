@@ -30,7 +30,7 @@
                                 <select class="form-select" id="select_supervisor">
                                     <option selected>المراقبون في فريقي</option>
                                     @foreach ($supervisors as $supervisor)
-                                        <option value="{{$supervisor->id}}">{{$supervisor->user->name}}</option>
+                                    <option value="{{$supervisor->id}}">{{$supervisor->user->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -47,8 +47,8 @@
 
 <section id="multiple-column-form">
     <div class="row match-height" id="supervisor_duties_form" style="display: none;">
-        <form action="{{route('supervisingTeam.store')}}" method="POST" enctype="multipart/form-data" >
-        @csrf
+        <form action="{{route('supervisingTeam.store')}}" method="POST" enctype="multipart/form-data">
+            @csrf
             <input class="form-check-input" type="hidden" name="supervisor_id" id="supervisor_id" value="{{$supervisor->id}}">
             <!-- START TEAM iNFO -->
             <div class="col-12">
@@ -308,11 +308,11 @@
                                     <!-- END EVALUATION PROBLEMS POST -->
 
 
-    </div>
-    </div>
-    </div>
-    </div>
-    <!-- END WEEKLY POSTS -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END WEEKLY POSTS -->
 
                 </div>
 
@@ -558,12 +558,8 @@
 <!-- END SUPERVISOR DUTIES FORM -->
 
 <!-- START SUPERVISOR DUTIES IMAGE -->
-<div class="col-12" id="super_duties_image">
-    <div class="card">
-        <div class="card-content">
-            <img src="https://picsum.photos/300" class="w-100">
-        </div>
-    </div>
+<div class="col-lg-6 col-sm-12 d-flex justify-content-center m-auto" id="super_duties_image">
+    <img src="{{asset('assets/images/report.png')}}" class="w-100">
 
 </div>
 <!-- END SUPERVISOR DUTIES IMAGE -->
