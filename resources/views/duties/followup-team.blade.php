@@ -3,6 +3,12 @@
     .validation-alert {
         display: none;
     }
+    .card-header-bg{
+        background-color:#dce7f1  !important;
+    }
+    .card-header-text{
+        color:#0E3744;
+    }
 </style>
 @section('page_title')
 <div class="row" style="direction: rtl">
@@ -16,8 +22,8 @@
 <!-- START SELECT LEADER -->
 <div class="col-12">
     <div class="card">
-        <div class="card-header" style="background:#dce7f1;">
-            <h4 class="card-title">القادة في فريقي </h4>
+        <div class="card-header card-header-bg">
+            <h4 class="card-title card-header-text">القادة في فريقي </h4>
         </div>
 
         <div class="card-content">
@@ -31,7 +37,7 @@
                                 <select class="form-select" id="inputGroupSelect01">
                                     <option selected>القادة في فريقي</option>
                                     @foreach ($leaders as $leader)
-                                        <option value="{{$leader->id}}">{{$leader->name}}</option>
+                                      <option value="{{$leader->id}}">{{$leader->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -48,15 +54,15 @@
 
 <section id="multiple-column-form">
     <div class="row match-height" id="followup_team_duties_form" style="display: none;">
-        <form action="{{route('followupTeam.store')}}" id="form" method="post">
-            @csrf 
+        <form action="{{route('followupTeam.store')}}" method="POST" enctype="multipart/form-data" id="form">
+            @csrf
             <input class="form-check-input" type="hidden" name="leader_id" id="leader_id" value="0">
 
             <!-- START TEAM iNFO -->
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header" style="background:#dce7f1;">
-                        <h4 class="card-title"> معدل الفريق وعدد أعضاءه</h4>
+                    <div class="card-header card-header-bg">
+                        <h4 class="card-title card-header-text"> معدل الفريق وعدد أعضاءه</h4>
                     </div>
                     <div class="card-content">
                         <div class="card-body">
@@ -65,7 +71,7 @@
                                     <div class="form-group has-icon-left">
                                         <h6> عدد السفراء</h6>
                                         <div class="position-relative">
-                                            <input name="team_members" type="text" class="form-control" placeholder=" عدد السفراء" id="team_members">
+                                            <input type="text" class="form-control" placeholder=" عدد السفراء" id="team_members" name="team_members">
                                             <div class="form-control-icon">
                                                 <i class="bi bi-person"></i>
                                             </div>
@@ -85,7 +91,7 @@
                                     <div class="form-group has-icon-left">
                                         <h6> معدل الفريق</h6>
                                         <div class="position-relative">
-                                            <input name="team_final_mark" type="text" class="form-control" placeholder=" معدل الفريق" id="team_final_mark">
+                                            <input type="text" class="form-control" placeholder=" معدل الفريق" id="team_final_mark" name="team_final_mark">
                                             <div class="form-control-icon">
                                                 <i class="bi bi-bar-chart-fill"></i>
                                             </div>
@@ -112,8 +118,8 @@
             <!-- START TEAM POSTS -->
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header" style="background:#dce7f1;">
-                        <h4 class="card-title"> المنشورات الأساسية</h4>
+                    <div class="card-header card-header-bg">
+                        <h4 class="card-title card-header-text"> المنشورات الأساسية</h4>
                     </div>
                     <div class="card-content">
                         <div class="card-body">
@@ -123,7 +129,7 @@
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <h5>منشور المتابعة</h5>
-                                        <div class="" id="follow_up_post">
+                                        <div class="" id="follow_up_post" name="follow_up_post">
                                             <div>
                                                 <input class="form-check-input" type="radio" name="follow_up_post" id="follow_up_post_1" value="published">
                                                 <label class="form-check-label" for="follow_up_post_1">
@@ -312,8 +318,8 @@
             <!-- START FREEZ AND ZEROS -->
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header" style="background:#dce7f1;">
-                        <h4 class="card-title"> حالة السفراء</h4>
+                    <div class="card-header card-header-bg">
+                        <h4 class="card-title card-header-text"> حالة السفراء</h4>
                     </div>
                     <div class="card-content">
                         <div class="card-body">
@@ -324,7 +330,7 @@
                                     <div class="form-group">
                                         <h5>عدد الحاصلين على صفر</h5>
                                         <div>
-                                            <input class="form-check-input" type="radio" name="zero_mark" id="zero_mark_1" value="option1">
+                                            <input class="form-check-input" type="radio" name="zero_mark" id="zero_mark_1" value="1">
                                             <label class="form-check-label" for="zero_mark_1">
                                                 يوجد
                                             </label>
@@ -347,7 +353,7 @@
                                             <div class="form-group has-icon-left">
                                                 <h6> عدد الحاصلين على صفر</h6>
                                                 <div class="position-relative">
-                                                    <input type="text" class="form-control zero_mark_NO" placeholder=" عدد الحاصلين على صفر" id="zero_mark_NO" disabled>
+                                                    <input name="zero_mark_NO" type="text" class="form-control zero_mark_NO"  placeholder=" عدد الحاصلين على صفر" id="zero_mark_NO" disabled>
                                                     <div class="form-control-icon">
                                                         <i class="bi bi-person"></i>
                                                     </div>
@@ -394,7 +400,7 @@
                                             <div class="form-group has-icon-left">
                                                 <h6> عدد المجمدين</h6>
                                                 <div class="position-relative">
-                                                    <input type="text" class="form-control frozen_ambassadors_NO" placeholder=" عدد المجمدين" id="frozen_ambassadors_NO" disabled>
+                                                    <input name="frozen_ambassadors_NO" type="text" class="form-control frozen_ambassadors_NO" placeholder=" عدد المجمدين" id="frozen_ambassadors_NO" disabled>
                                                     <div class="form-control-icon">
                                                         <i class="bi bi-person"></i>
                                                     </div>
@@ -424,8 +430,8 @@
             <!-- START THURSDAY AND FRIDAY -->
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header" style="background:#dce7f1;">
-                        <h4 class="card-title"> مهمة الخميس والجمعة</h4>
+                    <div class="card-header card-header-bg">
+                        <h4 class="card-title card-header-text"> مهمة الخميس والجمعة</h4>
                     </div>
                     <div class="card-content">
                         <div class="card-body">
@@ -491,8 +497,8 @@
             <!-- START NEWS -->
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header" style="background:#dce7f1;">
-                        <h4 class="card-title"> إيصال الأخبار</h4>
+                    <div class="card-header card-header-bg">
+                        <h4 class="card-title card-header-text"> إيصال الأخبار</h4>
                     </div>
                     <div class="card-content">
                         <div class="card-body">
@@ -500,7 +506,7 @@
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <h5>النقاش المنهجي</h5>
-                                        <div class="" id="discussion_post">
+                                        <div class="" id="discussion_post" name="discussion_post">
 
                                             <div>
                                                 <input class="form-check-input" type="radio" name="discussion_post" id="discussion_post_1" value="published">
@@ -541,7 +547,7 @@
                                 <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <h5>دورة القيادة</h5>
-                                        <div class="" id="leader_training">
+                                        <div class="" id="leader_training" name="leader_training">
 
                                             <div>
                                                 <input class="form-check-input" type="radio" name="leader_training" id="leader_training_1" value="published">
@@ -588,8 +594,8 @@
             <!-- START FINAL MARKS -->
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header" style="background:#dce7f1;">
-                        <h4 class="card-title"> العلامات النهائية</h4>
+                    <div class="card-header card-header-bg">
+                        <h4 class="card-title card-header-text"> العلامات النهائية</h4>
                     </div>
                     <div class="card-content">
                         <div class="card-body">
@@ -661,21 +667,21 @@
                                     <div>
                                         <h6>سكرين للتواصل مع القائد</h6>
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input form-control radius" id="audit_leader_messaging_1" disabled>
+                                            <input name="audit_leader_messaging_1" type="file" class="custom-file-input form-control radius audit_leader_messaging_standard" id="audit_leader_messaging_standard" disabled>
                                         </div>
 
                                         <div class="custom-file mt-1">
-                                            <input type="file" class="custom-file-input form-control radius" id="audit_leader_messaging_2" disabled>
+                                            <input name="audit_leader_messaging_2" type="file" class="custom-file-input form-control radius audit_leader_messaging_standard" id="audit_leader_messaging_standard" disabled>
                                         </div>
 
                                         <div class="custom-file mt-1">
-                                            <input type="file" class="custom-file-input form-control radius" id="audit_leader_messaging_3" disabled>
+                                            <input name="audit_leader_messaging_3" type="file" class="custom-file-input form-control radius audit_leader_messaging_standard" id="audit_leader_messaging_standard" disabled>
                                         </div>
 
                                         <div class="mt-3">
                                             <h6>سكرين لرد القائد على رسالتك</h6>
                                             <div class="custom-file">
-                                                <input type="file" class="custom-file-input form-control radius" id="audit_leader_replay" disabled>
+                                                <input name="audit_leader_messaging_reply" type="file" class="custom-file-input form-control radius audit_leader_messaging_standard" id="audit_leader_replay" disabled>
                                             </div>
 
                                         </div>
@@ -692,8 +698,8 @@
             <!-- START WITHDRAWN AND LEADER READING -->
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header" style="background:#dce7f1;">
-                        <h4 class="card-title"> المنسحبين - قراءة القائد </h4>
+                    <div class="card-header card-header-bg">
+                        <h4 class="card-title card-header-text"> المنسحبين - قراءة القائد </h4>
                     </div>
                     <div class="card-content">
                         <div class="card-body">
@@ -724,7 +730,7 @@
                                             </label>
                                         </div>
                                         <!-- START VALIDATION  -->
-                                        <div class="alert alert-danger mt-2 p-2 opacity-50 validation-alert" role="alert" id="withdrawn_ambassadors_required">
+                                        <div class="alert alert-danger mt-2 p-2 opacity-50 validation-alert" role="alert" id="withdrawn_ambassadors_required" >
                                             هذا الحقل مطلوب
                                         </div>
                                         <!-- END VALIDATION  -->
@@ -733,16 +739,16 @@
                                             <div class="form-group has-icon-left">
                                                 <h6> عدد المنسحبين</h6>
                                                 <div class="position-relative">
-                                                    <input type="text" class="form-control" placeholder=" عدد المنسحبين" id="withdrawn_ambassadors_No" disabled>
+                                                    <input type="text" class="form-control" placeholder=" عدد المنسحبين" id="withdrawn_ambassadors_No" name="withdrawn_ambassadors_No" disabled>
                                                     <div class="form-control-icon">
                                                         <i class="bi bi-person"></i>
                                                     </div>
                                                 </div>
                                                 <!-- START VALIDATION  -->
-                                                <div class="alert alert-danger mt-2 p-2 opacity-50 validation-alert" role="alert" id="withdrawn_ambassadors_No_required">
+                                                <div class="alert alert-danger mt-2 p-2 opacity-50 validation-alert" role="alert"  id="withdrawn_ambassadors_No_required">
                                                     هذا الحقل مطلوب في حال وجود منسحبين
                                                 </div>
-                                                <div class="alert alert-danger mt-2 p-2 opacity-50 validation-alert" role="alert" id="withdrawn_ambassadors_number">
+                                                <div class="alert alert-danger mt-2 p-2 opacity-50 validation-alert" role="alert" id="withdrawn_ambassadors_No_number">
                                                     يجب أن تكون قيمة الحقل عددية
                                                 </div>
                                                 <!-- END VALIDATION  -->
@@ -752,7 +758,7 @@
                                         <div class="mt-3">
                                             <h6>سكرين للتواصل مع القائد الذي لم يدخل أعداد المنسحبين </h6>
                                             <div class="custom-file">
-                                                <input type="file" class="custom-file-input form-control radius" id="withdrawn_ambassadors_message" disabled>
+                                                <input name="withdrawn_ambassadors_message" type="file" class="custom-file-input form-control radius" id="withdrawn_ambassadors_message" disabled>
                                             </div>
                                             <!-- START VALIDATION  -->
                                             <div class="alert alert-danger mt-2 p-2 opacity-50 validation-alert" role="alert" id="withdrawn_ambassadors_message_required">
@@ -803,7 +809,7 @@
                                         <hr />
                                         <div>
                                             <div class="form-group with-title mb-3">
-                                                <textarea class="form-control" id="about_leader" rows="3"></textarea>
+                                                <textarea class="form-control" id="about_leader" name="about_leader" rows="3"></textarea>
                                                 <label>ملاحظات حول القائد [اختياري]</label>
                                             </div>
                                         </div>
@@ -828,12 +834,8 @@
 
 
 <!-- START SUPERVISOR DUTIES IMAGE -->
-<div class="col-12" id="leaders_duties_image">
-    <div class="card">
-        <div class="card-content">
-            <img src="https://picsum.photos/300" class="w-100">
-        </div>
-    </div>
+<div class="col-lg-6 col-sm-12 d-flex justify-content-center m-auto" id="leaders_duties_image">
+            <img src="{{asset('assets/images/follwoup-team-report.png')}}" class="w-100">
 
 </div>
 <!-- END SUPERVISOR DUTIES IMAGE -->

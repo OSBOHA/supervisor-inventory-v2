@@ -12,8 +12,7 @@ class FollowupTeamDuty extends Model
         'leader_id',
         'week_id',
         'supervisor_id',
-//        'last_edit_by',
-        'user_id',
+        'last_edit_by',
         'team_final_mark',
         'team_members',
         'follow_up_post',
@@ -31,6 +30,7 @@ class FollowupTeamDuty extends Model
         'about_leader',
         'points',
         'extra_points',  
+        'withdrawn_ambassadors_No'
     ];
 
     public function leader(){

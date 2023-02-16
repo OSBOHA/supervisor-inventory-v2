@@ -80,7 +80,7 @@ Route::controller(SupervisorDutyController::class)->prefix('supervising')->group
 
 ######## Followup team  ########
 Route::controller(followupTeamController::class)->prefix('followupTeam')->group(function () { 
-    Route::get('/','index')->name('followupTeam.index');
+    Route::get('/create','create')->name('followupTeam.create');
     Route::post('/store','store')->name('followupTeam.store');
 });
 

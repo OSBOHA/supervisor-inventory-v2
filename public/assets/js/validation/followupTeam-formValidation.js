@@ -319,6 +319,12 @@ function isFinalMarkValid() {
 //####### START audit_final_mark VALIDATION #######// 
 $('[name="audit_final_mark"]').click(function () {
     $("#audit_final_mark_required").css("display", "none");
+    if ($('#audit_final_mark_1').is(':checked')) {
+        $('.audit_leader_messaging_standard').removeAttr('disabled');
+    } else {
+        $('.audit_leader_messaging_standard').prop('checked', false);
+        $('.audit_leader_messaging_standard').attr('disabled', 'disabled');
+    }
 });
 function isAuditFinalMarkValid() {
     if ($('input[name="audit_final_mark"]:checked').length <= 0) {
@@ -337,27 +343,34 @@ $('[name="withdrawn_ambassadors"]').click(function () {
 
     if ($('#withdrawn_ambassadors_1').is(':checked')) {
         isWithdrawnAmbassadorsNoValid();
-        $('.withdrawn_ambassadors_No').removeAttr('disabled');
-        $('.withdrawn_ambassadors_message').removeAttr('disabled');
+        $('#withdrawn_ambassadors_No').removeAttr('disabled');
+        $('#withdrawn_ambassadors_message').attr('disabled', 'disabled');
+
+        
+    } else if ($('#withdrawn_ambassadors_2').is(':checked')){
+        $('#withdrawn_ambassadors_message').removeAttr('disabled');
+        $('#withdrawn_ambassadors_No').attr('disabled', 'disabled');
+
     } else {
         $('#withdrawn_ambassadors_No').val('');
-        $('.withdrawn_ambassadors_No').attr('disabled', 'disabled');
+        $('#withdrawn_ambassadors_No').attr('disabled', 'disabled');
         $('#withdrawn_ambassadors_message').val('');
-        $('.withdrawn_ambassadors_message').attr('disabled', 'disabled');
+        $('#withdrawn_ambassadors_message').attr('disabled', 'disabled');
     }
 });
-$("#frozen_ambassadors_NO").change(function () {
+
+$("#withdrawn_ambassadors_No").change(function () {
     if (!isWithdrawnAmbassadorsNoValid()) {
-        if ($('#frozen_ambassadors_NO').val() === '') {
-            $("#frozen_ambassadors_NO_required").css("display", "block");
-            $("#frozen_ambassadors_NO_number").css("display", "none");
+        if ($('#withdrawn_ambassadors_No').val() === '') {
+            $("#withdrawn_ambassadors_No_required").css("display", "block");
+            $("#withdrawn_ambassadors_No_number").css("display", "none");
         } else {
-            $("#frozen_ambassadors_NO_number").css("display", "block");
-            $("#frozen_ambassadors_NO_required").css("display", "none");
+            $("#withdrawn_ambassadors_No_number").css("display", "block");
+            $("#withdrawn_ambassadors_No_required").css("display", "none");
         }
     } else {
-        $("#frozen_ambassadors_NO_required").css("display", "none");
-        $("#frozen_ambassadors_NO_number").css("display", "none");
+        $("#withdrawn_ambassadors_No_required").css("display", "none");
+        $("#withdrawn_ambassadors_No_number").css("display", "none");
     }
 });
 
@@ -376,14 +389,6 @@ function isWithdrawnAmbassadorsValid() {
 }
 
 //####### END withdrawn_ambassadors VALIDATION #######// 
-
-
-
-
-
-
-
-
 
 //####### START INCOMPLETE MESSAGES CONTROL #######// 
 
@@ -419,15 +424,18 @@ $('input[name="new_ambassadors_post_incomplete[]"]').click(function () {
 
 //####### START leader_reading VALIDATION #######// 
 $('input[name="leader_reading"]').click(function () {
-    isSupervisorReadingValid()
+    isLeaderReadingValid()
+    $("#leader_reading_required").css("display", "none");
 });
 
 function isLeaderReadingValid() {
     if ($('input[name="leader_reading"]:checked').length <= 0) {
         $("#leader_reading_required").css("display", "block");
+        return false;
     }
     else {
         $("#leader_reading_required").css("display", "none");
+        return true
     }
 }
 //####### END leader_reading VALIDATION #######// 
@@ -451,10 +459,11 @@ document.querySelector('#form').addEventListener('submit', function (e) {
         isDiscussionPostValid() &&
         isLeaderTrainingValid() &&
         isFinalMarkValid() &&
-        isAuditFinalMarkValid() 
+        isAuditFinalMarkValid() &&
+        isWithdrawnAmbassadorsValid() &&
+        isLeaderReadingValid()
     ) {
         $(this).submit();
-
     }
     else {
         isTeamMembersValid();
@@ -469,8 +478,8 @@ document.querySelector('#form').addEventListener('submit', function (e) {
         isLeaderTrainingValid();
         isFinalMarkValid();
         isAuditFinalMarkValid();
-
-        console.log('hi')
+        isWithdrawnAmbassadorsValid();
+        isLeaderReadingValid();
     }
 
 });
