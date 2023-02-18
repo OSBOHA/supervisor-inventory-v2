@@ -38,6 +38,7 @@
                                     <option selected>القادة في فريقي</option>
                                     @foreach ($leaders as $leader)
                                       <option value="{{$leader->id}}">{{$leader->name}}</option>
+
                                     @endforeach
                                 </select>
                             </div>
@@ -354,6 +355,7 @@
                                                 <h6> عدد الحاصلين على صفر</h6>
                                                 <div class="position-relative">
                                                     <input name="zero_mark_NO" type="text" class="form-control zero_mark_NO"  placeholder=" عدد الحاصلين على صفر" id="zero_mark_NO" disabled>
+
                                                     <div class="form-control-icon">
                                                         <i class="bi bi-person"></i>
                                                     </div>
@@ -740,6 +742,7 @@
                                                 <h6> عدد المنسحبين</h6>
                                                 <div class="position-relative">
                                                     <input type="text" class="form-control" placeholder=" عدد المنسحبين" id="withdrawn_ambassadors_No" name="withdrawn_ambassadors_No" disabled>
+
                                                     <div class="form-control-icon">
                                                         <i class="bi bi-person"></i>
                                                     </div>

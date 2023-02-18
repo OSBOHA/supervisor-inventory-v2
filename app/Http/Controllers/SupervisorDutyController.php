@@ -136,6 +136,112 @@ class SupervisorDutyController extends Controller
             $duty->update(['points' =>$duty->points]); 
             return redirect()->back();
     }
+    public function followupTeamDuty()
+    { 
+        $supervisors = Supervisor::where('current_advisor',3)->get();//Auth::id())->get();
+        return view('duties.followup-team',compact('supervisors'));
+    }
+
+    public function followupTeamDutyStore(Request $request)
+    {
+        $points = 0 ;
+        $current_week = Week::latest()->pluck('id')->first();
+        //team_final_mark
+        if($request->team_final_mark < 100 && $request->team_final_mark > 80 ){
+            $points += 5; 
+        }
+        
+        else if($request->team_final_mark < 80 && $request->team_final_mark > 75 ){
+            $points += 2; 
+        }
+        else if($request->team_final_mark < 75 && $request->team_final_mark > 65 ){
+            $points += 1; 
+        }
+        //thursday_task
+        if ($request->thursday_task == 1 ) {
+            $points += 5; 
+        } elseif($request->thursday_task == 0){
+            $points -= 5 ;   
+        }
+        //final_mark
+        if ($request->final_mark == 'published' ) {
+            $points += 4; 
+        } elseif($request->final_mark == 'didnt publish'){
+            $points -= 4 ;   
+        }
+        //discussion_post
+        if ($request->discussion_post == 'published' ) {
+            $points += 1; 
+        } elseif($request->discussion_post == 'didnt publish'){
+            $points -= 1 ;   
+        }
+        //leader_training
+        if ($request->leader_training == 'published' ) {
+            $points += 1; 
+        } elseif($request->leader_training == 'didnt publish'){
+            $points -= 1 ;   
+        }
+        //withdrawn_ambassadors_No
+        if ($request->withdrawn_ambassadors_No < 4 ) {
+            $points += 3; 
+        } elseif($request->withdrawn_ambassadors_No < 6){
+            $points += 2 ;   
+        }
+        elseif($request->withdrawn_ambassadors_No < 8){
+            $points += 1 ;   
+        }
+        $followup_team_duty = FollowupTeamDuty::updateOrCreate(
+            [   
+            'leader_id' => 2,
+            'week_id' => $current_week,
+            'supervisor_id' => 3,
+            'user_id'    =>1],
+
+            ['team_final_mark' => $request->team_final_mark,
+            'team_members' => $request->team_members,
+            'follow_up_post' => $request->follow_up_post ,
+            'about_asboha_post' => $request->about_asboha_post,
+            'zero_mark' => $request->zero_mark,
+            'frozen_ambassadors' => $request->frozen_ambassadors,
+            'friday_task' => $request->friday_task,
+            'thursday_task' => $request->thursday_task,
+            'leader_training' => $request->leader_training,
+            'discussion_post' => $request->discussion_post,
+            'final_mark' => $request->final_mark,
+            'audit_final_mark' => $request->audit_final_mark,
+            'withdrawn_ambassadors' => $request->withdrawn_ambassadors,
+            'withdrawn_ambassadors_No' => $request->withdrawn_ambassadors_No,
+            'leader_reading' => $request->leader_reading,
+            'about_leader' => $request->about_leader,
+            'points' => $points,
+            'extra_points' => 0,
+        ]);
+        //follow_up_post
+        if ($request->follow_up_post == 'incomplete' ) {
+            $followup_team_duty->points += 8 - count($request->follow_up_post_incomplete); 
+            Criteria::updateOrCreate(
+                ['supervisor_duty_id' => $followup_team_duty->id , "task_id" => 1],
+                ['deficiencies' => implode(",",$request->follow_up_post_incomplete)]
+            );
+
+        } elseif($request->follow_up_post == 'published'){
+            $followup_team_duty->points += 8 ;   
+        }
+       //about_asboha_post
+        if ($request->about_asboha_post == 'incomplete' ) {
+            $followup_team_duty->points += 6 - count($request->about_asboha_post_incomplete); 
+            Criteria::updateOrCreate(
+                ['supervisor_duty_id' => $followup_team_duty->id , "task_id" => 1],
+                ['deficiencies' => implode(",",$request->about_asboha_post_incomplete)]
+            );
+
+        } elseif($request->about_asboha_post == 'published'){
+            $followup_team_duty->points += 6 ;   
+        }
+        
+        $followup_team_duty->update(['points' =>$followup_team_duty->points]); 
+        return redirect()->back();
+    }
 
     
 }
