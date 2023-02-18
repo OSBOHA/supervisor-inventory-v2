@@ -36,8 +36,9 @@
                             <div class="input-group mb-3 ">
                                 <select class="form-select" id="inputGroupSelect01">
                                     <option selected>القادة في فريقي</option>
-                                    @foreach ($supervisors as $supervisor)
-                                      <option value="{{$supervisor->id}}">{{$supervisor->user->name}}</option>
+                                    @foreach ($leaders as $leader)
+                                      <option value="{{$leader->id}}">{{$leader->name}}</option>
+
                                     @endforeach
                                 </select>
                             </div>
@@ -54,7 +55,7 @@
 
 <section id="multiple-column-form">
     <div class="row match-height" id="followup_team_duties_form" style="display: none;">
-        <form action="{{route('followupTeamDuty.store')}}" method="POST" enctype="multipart/form-data" >
+        <form action="{{route('followupTeam.store')}}" method="POST" enctype="multipart/form-data" id="form">
             @csrf
             <input class="form-check-input" type="hidden" name="leader_id" id="leader_id" value="0">
 
@@ -353,7 +354,8 @@
                                             <div class="form-group has-icon-left">
                                                 <h6> عدد الحاصلين على صفر</h6>
                                                 <div class="position-relative">
-                                                    <input type="text" class="form-control zero_mark_NO"  placeholder=" عدد الحاصلين على صفر" id="zero_mark_NO" disabled>
+                                                    <input name="zero_mark_NO" type="text" class="form-control zero_mark_NO"  placeholder=" عدد الحاصلين على صفر" id="zero_mark_NO" disabled>
+
                                                     <div class="form-control-icon">
                                                         <i class="bi bi-person"></i>
                                                     </div>
@@ -400,7 +402,7 @@
                                             <div class="form-group has-icon-left">
                                                 <h6> عدد المجمدين</h6>
                                                 <div class="position-relative">
-                                                    <input type="text" class="form-control frozen_ambassadors_NO" placeholder=" عدد المجمدين" id="frozen_ambassadors_NO" disabled>
+                                                    <input name="frozen_ambassadors_NO" type="text" class="form-control frozen_ambassadors_NO" placeholder=" عدد المجمدين" id="frozen_ambassadors_NO" disabled>
                                                     <div class="form-control-icon">
                                                         <i class="bi bi-person"></i>
                                                     </div>
@@ -667,21 +669,21 @@
                                     <div>
                                         <h6>سكرين للتواصل مع القائد</h6>
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input form-control radius" id="audit_leader_messaging_1" disabled>
+                                            <input name="audit_leader_messaging_1" type="file" class="custom-file-input form-control radius audit_leader_messaging_standard" id="audit_leader_messaging_standard" disabled>
                                         </div>
 
                                         <div class="custom-file mt-1">
-                                            <input type="file" class="custom-file-input form-control radius" id="audit_leader_messaging_2" disabled>
+                                            <input name="audit_leader_messaging_2" type="file" class="custom-file-input form-control radius audit_leader_messaging_standard" id="audit_leader_messaging_standard" disabled>
                                         </div>
 
                                         <div class="custom-file mt-1">
-                                            <input type="file" class="custom-file-input form-control radius" id="audit_leader_messaging_3" disabled>
+                                            <input name="audit_leader_messaging_3" type="file" class="custom-file-input form-control radius audit_leader_messaging_standard" id="audit_leader_messaging_standard" disabled>
                                         </div>
 
                                         <div class="mt-3">
                                             <h6>سكرين لرد القائد على رسالتك</h6>
                                             <div class="custom-file">
-                                                <input type="file" class="custom-file-input form-control radius" id="audit_leader_replay" disabled>
+                                                <input name="audit_leader_messaging_reply" type="file" class="custom-file-input form-control radius audit_leader_messaging_standard" id="audit_leader_replay" disabled>
                                             </div>
 
                                         </div>
@@ -739,7 +741,8 @@
                                             <div class="form-group has-icon-left">
                                                 <h6> عدد المنسحبين</h6>
                                                 <div class="position-relative">
-                                                    <input type="text" class="form-control" placeholder=" عدد المنسحبين" id="withdrawn_ambassadors_No" name="withdrawn_ambassadors_No">
+                                                    <input type="text" class="form-control" placeholder=" عدد المنسحبين" id="withdrawn_ambassadors_No" name="withdrawn_ambassadors_No" disabled>
+
                                                     <div class="form-control-icon">
                                                         <i class="bi bi-person"></i>
                                                     </div>
@@ -748,7 +751,7 @@
                                                 <div class="alert alert-danger mt-2 p-2 opacity-50 validation-alert" role="alert"  id="withdrawn_ambassadors_No_required">
                                                     هذا الحقل مطلوب في حال وجود منسحبين
                                                 </div>
-                                                <div class="alert alert-danger mt-2 p-2 opacity-50 validation-alert" role="alert" id="withdrawn_ambassadors_number">
+                                                <div class="alert alert-danger mt-2 p-2 opacity-50 validation-alert" role="alert" id="withdrawn_ambassadors_No_number">
                                                     يجب أن تكون قيمة الحقل عددية
                                                 </div>
                                                 <!-- END VALIDATION  -->
@@ -758,7 +761,7 @@
                                         <div class="mt-3">
                                             <h6>سكرين للتواصل مع القائد الذي لم يدخل أعداد المنسحبين </h6>
                                             <div class="custom-file">
-                                                <input type="file" class="custom-file-input form-control radius" id="withdrawn_ambassadors_message" disabled>
+                                                <input name="withdrawn_ambassadors_message" type="file" class="custom-file-input form-control radius" id="withdrawn_ambassadors_message" disabled>
                                             </div>
                                             <!-- START VALIDATION  -->
                                             <div class="alert alert-danger mt-2 p-2 opacity-50 validation-alert" role="alert" id="withdrawn_ambassadors_message_required">

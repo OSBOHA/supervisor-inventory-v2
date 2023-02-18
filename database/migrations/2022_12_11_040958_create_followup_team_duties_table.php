@@ -19,8 +19,6 @@ return new class extends Migration
             $table->integer('week_id');
             $table->integer('supervisor_id');
             $table->integer('last_edit_by')->nullable();
-            //$table->integer('user_id');
-            $table->integer('last_update_by')->nullable();
             $table->integer('user_id');
             $table->integer('team_final_mark');
             $table->integer('team_members');
@@ -35,9 +33,9 @@ return new class extends Migration
             $table->enum('final_mark',['published','didnt publish','published instead']);
             $table->enum('audit_final_mark',['done','not done','untargeted']);
             $table->enum('withdrawn_ambassadors',['done','not done','no withdrawal']);
-            $table->integer('withdrawn_ambassadors_No')->default(0);
+            $table->integer('withdrawn_ambassadors_No')->nullable();
             $table->enum('leader_reading',['read','not read','late', 'didnt vote']);
-            $table->integer('about_leader')->nullable();
+            $table->string('about_leader')->nullable();
             $table->integer('points')->default(0);
             $table->integer('extra_points')->default(0);
             $table->timestamps();
