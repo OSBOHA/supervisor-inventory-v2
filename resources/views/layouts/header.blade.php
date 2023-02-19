@@ -36,8 +36,14 @@
                                     <a href="component-breadcrumb.html" class='submenu-link'>احصائيات</a>
                                 </li>
                                 <li class="submenu-item  ">
-                                    <a href="component-breadcrumb.html" class='submenu-link'>تسجيل الخروج</a>
+                                    <a href="{{ route('logout') }}"class='submenu-link'
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        تسجيل الخروج
+                                    </a>
                                 </li>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
 
                             </ul>
                         </div>
