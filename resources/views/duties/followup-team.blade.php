@@ -20,6 +20,7 @@
 
 @section('content')
 <!-- START SELECT LEADER -->
+
 <div class="col-12">
     <div class="card">
         <div class="card-header card-header-bg">
@@ -36,10 +37,17 @@
                             <div class="input-group mb-3 ">
                                 <select class="form-select" id="inputGroupSelect01">
                                     <option selected>القادة في فريقي</option>
-                                    @foreach ($leaders as $leader)
-                                      <option value="{{$leader->id}}">{{$leader->name}}</option>
-
-                                    @endforeach
+                                    @if(auth()->user()->hasRole('advisor'))
+                                        @foreach ($supervisors as $supervisor)
+                                        <option value="{{$supervisor->id}}">{{$supervisor->user->name}}</option>
+                                        @endforeach
+                                    @endif   
+                                    @if(auth()->user()->hasRole('supervisor'))
+                                        @foreach ($leaders as $leader)
+                                        <option value="{{$leader->id}}">{{$leader->name}}</option>
+                                        @endforeach
+                                    @endif
+                                   
                                 </select>
                             </div>
                         </form>

@@ -21,7 +21,7 @@
                 <li class="menu-item  has-sub">
                     <a href="#" class='menu-link'>
                         <i class="avatar avatar-md2"><img src="{{asset('assets/images/faces/av1.png')}}" alt="Avatar"></i>
-                        <span>John Ducky</span>
+                        <span>{{@Auth::user()->name}}</span>
                     </a>
                     <div class="submenu ">
                         <!-- Wrap to submenu-group-wrapper if you want 3-level submenu. Otherwise remove it. -->
@@ -85,6 +85,9 @@
 
                                 <li class="submenu-item  ">
                                     <a href="component-breadcrumb.html" class='submenu-link'>Leader2</a>
+                                </li>
+                                <li class="submenu-item  ">
+                                    <a  href="{{route('leader.create',['listAll','add'])}}" class='submenu-link'>إضافة قائد</a>
                                 </li>
 
                             </ul>

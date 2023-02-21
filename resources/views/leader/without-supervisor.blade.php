@@ -22,24 +22,20 @@
                             </tr>
                         </thead>
                         <tbody>
+                            {{$i=1;}}
+                            @foreach($leaders as $leader)
                             <tr>
-                                <td> 1 </td>
-                                <td>TITLE </td>
-                                <td>TITLE </td>
-                                <td>TITLE </td>
+                                <td>{{$i++}} </td>
+                                <td>{{$leader->name}}</td>
+                                <td>{{$leader->team}}</td>
+                                <td>10</td>
                                 <td>
-                                    <span class="badge bg-success">تعيين</span>
+                                    <a href="{{route('transferLeader',['withoutSupervisor',$leader->id])}}">    
+                                        <span class="badge bg-success">تعيين</span>
+                                    </a>
                                 </td>
                             </tr>
-                            <tr>
-                                <td> 2 </td>
-                                <td>TITLE </td>
-                                <td>TITLE </td>
-                                <td>TITLE </td>
-                                <td>
-                                    <span class="badge bg-success">تعيين</span>
-                                </td>
-                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
