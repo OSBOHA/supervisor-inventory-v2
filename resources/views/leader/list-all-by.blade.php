@@ -24,13 +24,15 @@
                                 </div>
                                 <h4 class="mb-2">{{$leader->name}}</h4>
                                 <p class="text-muted mb-4">عدد السفراء<span class="mx-2">|</span> <a href="#!">فريق المتابعة</a></p>
-
-                                <button type="button" class="btn btn-primary btn-rounded btn-lg">
-                                    نقل
-                                </button>
-                                <button type="button" class="btn btn-primary btn-rounded btn-lg">
+                       
+                                <a class="btn btn-primary btn-rounded btn-lg"href="{{route('manipulatLeader',['listAll','update',$leader->id])}}">
                                     تعديل
-                                </button>
+                                 </a>
+
+                                 <a class="btn btn-primary btn-rounded btn-lg"href="{{route('transferLeader',['listAll',$leader->id])}}">
+                                    نقل
+                                 </a>
+
                                 <div class="d-flex justify-content-between text-center mt-5 mb-2">
                                     <div>
                                         <p class="mb-2 h5">0</p>

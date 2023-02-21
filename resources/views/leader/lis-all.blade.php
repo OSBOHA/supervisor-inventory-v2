@@ -4,7 +4,11 @@
 
 @section('content')
 
-
+@if (session('message'))
+    <div class="alert alert-{{ session('status') }}">
+        {{ session('message') }}
+    </div>
+@endif 
 <div class="col-12">
     <div class="row">
         <div class="card">
@@ -28,8 +32,13 @@
                                 <td>{{$leader->team}}</td>
                                 <td>10</td>
                                 <td>
-                                    <span class="badge bg-success">تعديل</span>
-                                    <span class="badge bg-success">نقل</span>
+                                    <span ></span>
+                                    <a href="{{route('manipulatLeader',['listAll','update',$leader->id])}}">
+                                        <span class="badge bg-success">تعديل</span>
+                                    </a>
+                                    <a href="{{route('transferLeader',['listAll',$leader->id])}}">    
+                                        <span class="badge bg-success">نقل</span>
+                                    </a>
                                 </td>
                             </tr>
                             @endforeach

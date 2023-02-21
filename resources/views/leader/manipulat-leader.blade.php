@@ -13,14 +13,17 @@
 <div class="col-12">
     <div class="card">
         <div class="card-header" style="background:#dce7f1;">
+            @if($type_page == "add")
             <h4 class="card-title"> إضافة قائد جديد </h4>
+            @endif
             <!-- show if leader -->
+            @if($type_page == "update")
             <h4 class="card-title"> تعديل بيانات القائد </h4>
+            @endif
         </div>
     </div>
 </div>
 <!-- END TITLE -->
-
 <section id="multiple-column-form">
     <div class="row match-height">
         <!-- START ADD NEW LEADER -->
@@ -32,7 +35,7 @@
 
                 <div class="card-content">
                     <div class="card-body">
-                        <form class="form" method="post">
+                        <form action="{{route('manipulatLeader.store')}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @if ($errors->any())
                             <div class="alert alert-light-danger color-danger">
@@ -43,34 +46,57 @@
                                 </ul>
                             </div>
                             @endif
-
+                            @if($type_page == "update")
                             <div class="form-group">
+                                <input class="form-check-input" type="hidden" name="leader_id" id="leader_id" value="{{$leader->id}}">
+                                <input class="form-check-input" type="hidden" name="name_route" id="name_route" value="{{$name_route}}">
                                 <div class="form-group mb-3">
                                     <label for="name" class="form-label">اسم القائد</label>
-                                    <input type="text" name='name' class="form-control" id="leaderName" rows="3">
+                                    <input type="text" name='name' class="form-control" id="leaderName" rows="3" value="{{$leader->name}}">
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="team" class="form-label">فريق المتابعة</label>
-                                    <input type="text" name='team' class="form-control" id="leaderTeam" rows="3">
+                                    <input type="text" name='team' class="form-control" id="leaderTeam" rows="3" value="{{$leader->team}}">
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="type" class="form-label">نوع القائد</label>
                                     <select name='type' class="form-control form-select" id="leaderType">
-                                        <option value="دائم">دائم</option>
-                                        <option value="دعم">دعم </option>
-
-                                        <!-- show if leader -->
-                                        <option value="دعم">منسحب </option>
+                                        <option value="permanent">دائم</option>
+                                        <option value="support">دعم </option>
+                                        <option value="withdrawn">منسحب </option>
                                     </select>
                                 </div>
                                 <div class="form-group mb-3">
-                                    <button type="submit" class="btn btn-primary">اضافة</button>
-                                    <!-- show if leader -->
-                                    <button type="" class="btn btn-primary">تعديل</button>
-                                    <button type="" class="btn btn-danger">حذف</button>
-                                </div>
-                            </div>
+                                <button type="submit" class="btn btn-primary"  name="update" value="update">تعديل</button>
+                                <button type="submit" class="btn btn-danger" name="delete" value="delete">حذف</button>
+                               
+                               </div>
+                                @endif
+                                @if($type_page == "add")
+                                <div class="form-group">
+                                    <input class="form-check-input" type="hidden" name="leader_id" id="leader_id">
+                                    <input class="form-check-input" type="hidden" name="name_route" id="name_route" value="{{$name_route}}">
 
+                                    <div class="form-group mb-3">
+                                        <label for="name" class="form-label">اسم القائد</label>
+                                        <input type="text" name='name' class="form-control" id="leaderName" rows="3">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="team" class="form-label">فريق المتابعة</label>
+                                        <input type="text" name='team' class="form-control" id="leaderTeam" rows="3">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="type" class="form-label">نوع القائد</label>
+                                        <select name='type' class="form-control form-select" id="leaderType">
+                                            <option value="permanent">دائم</option>
+                                            <option value="support">دعم </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <button type="submit" class="btn btn-primary"  name="add">اضافة</button>                                  </div>
+                                @endif
+                                    
+                            </div>
                         </form>
                     </div>
                 </div>
