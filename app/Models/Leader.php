@@ -16,9 +16,9 @@ class Leader extends Model
         'type',
     ];
     public function supervisor(){
-        return $this->hasone(Supervisor::class,'supervisor_id');
+        return $this->belongsTo(Supervisor::class,'supervisor_id');
     }
     public function advisor(){
-        return $this->hasone(Advisor::class,'advisor_id');
+        return $this->belongsTo(Advisor::class,'advisor_id');
     }
 }

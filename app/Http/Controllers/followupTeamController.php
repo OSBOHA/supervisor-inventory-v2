@@ -9,12 +9,15 @@ use App\Models\Leader;
 use App\Models\Week;
 use App\Models\Criteria;
 use App\Models\Photo;
+use App\Models\Supervisor;
+
 
 class followupTeamController extends Controller
 {
     public function create()
     { 
-        $leaders = Leader::where('supervisor_id',Auth::id())->get();
+        $supervisor = Supervisor::where('user_id',Auth::id())->first();
+        $leaders = Leader::where('supervisor_id',$supervisor->id)->get();
         return view ('duties.followup-team',compact('leaders'));
     }
 

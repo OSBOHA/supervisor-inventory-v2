@@ -1,35 +1,22 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\User;
-use App\Models\Leader;
-use App\Models\Supervisor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Models\Leader;
+use App\Models\Supervisor;
+use App\Models\FollowupTeamDuty;
+
 
 
 class LeaderController extends Controller
 {
-    
-    public function create(Request $request){
-        $validator = Validator::make($request->all(), [
-            'team' => 'required',
-            'name' => 'required',
-            'type' => 'required',
-
-        ]);
-        if ($validator->fails()) {
-            return $this->jsonResponseWithoutMessage($validator->errors(), 'data', 500);
-        }
-            $request['supervisor_id']= 1;//Auth::id(); 
-            $supervisor = Supervisor::where('id',1)->first();  
-           $request['advisor_id'] = $supervisor->current_advisor;   
-            leader::create($request->all());
-            echo "ok";
-          return $this->jsonResponseWithoutMessage("leader Craeted Successfully", 'data', 200);
-
+    public function create($name_route,$type_page){
+        return view ('leader.manipulat-leader',compact('name_route','type_page'));
     }
+    
     public function swap_leader(Request $request){
         $validator = Validator::make($request->all(), [
             'supervisor_1' => 'required',
@@ -49,36 +36,43 @@ class LeaderController extends Controller
         else
            echo "The supervisor is not found";
     }
-    public function transfer_leader(Request $request){
+    public function transferLeader($name_route,$leader_id){
+        $leader = leader::find($leader_id);
+        $supervisors = supervisor::where('current_advisor', 3)->get();
+        return view('leader.transfer', compact('leader','supervisors','name_route'));
+    }
+    public function transferLeaderStore(Request $request){
         $validator = Validator::make($request->all(), [
             'leader_id' => 'required',
             'supervisor_id' => 'required',
         ]);
-        $leader = leader::where('id', $request->leader_id)->first();
+        $leader = leader::find($request->leader_id);
         if($leader){
-            $previous_supervisor = $leader->supervisor_id;
-            $leader->update(['supervisor_id'=>$request->supervisor_id]);
-            echo "update leader is done";
-            $a = $this->check_active_supervisor($previous_supervisor);
-            echo $a;
+           $previous_supervisor = $leader->supervisor_id;
+           $leader->update(['supervisor_id'=>$request->supervisor_id]);
+           //$this->check_active_supervisor($previous_supervisor);
+           $status = 'success';
+           $msg = "تم النقل بنجاح";
         }
         else{
-            echo "This leader is not found";
+            $status = 'danger';
+            $msg = "هذا القائد غير موجود";
 
         }
+        return redirect()->route($request->name_route)->with(['status' => $status, 'message' => $msg]);
     }
     public function check_active_supervisor($supervisor_id){
 
         $supervisor = leader::where('supervisor_id',$supervisor_id)->get();
         if($supervisor->isNotEmpty()){
-            return "this supervisor is active";
+            //echo "this supervisor is active";
         }
         else{
-            $supervisor = supervisor::where('id', $supervisor_id)->first();
-            $user = user::where('id', $supervisor->id)->first();
-            $user->update(['is_active'=>0]);
-            return "this supervisor is not active";
-
+            $supervisor = supervisor::find($supervisor_id);
+            $user = user::find($supervisor->user_id);
+            $user->is_active = 0;
+            $user->save();
+            //echo "this supervisor is not active";
         }
     }
 
@@ -89,10 +83,6 @@ class LeaderController extends Controller
             'advisor_id' => 'required_without:supervisor_id,type',
             'type' => 'required_without:supervisor_id,advisor_id',
         ]);
-        if ($validator->fails()) {
-            echo "errors";
-            //return $this->jsonResponseWithoutMessage($validator->errors(), 'data', 500);
-        }
         if($request->has('supervisor_id'))
             $leaders = leader::where('supervisor_id', $request->supervisor_id)->get();
         else if($request->has('advisor_id'))
@@ -113,22 +103,55 @@ class LeaderController extends Controller
         return view('leader.lis-all', compact('leaders'));
 
     }
-    public function update(Request $request)
+    public function manipulatLeader($name_route,$type_page,$leader_id)
     {
-        $validator = Validator::make($request->all(), [
-            'leader_id' => 'required',
-        ]);
-        if ($validator->fails()) {
-            echo "validator errors";
-        }
-         $leader = leader::where('supervisor_id', 1)->where('id', $request->leader_id)->first();
-         if($leader){
-            $leader->update($request->all());
-            echo "leader info Updated Successfully";
-        }
-        else{
-            echo"NotFound";
-        }
+        $leader = leader::where('id',$leader_id)->first();
+        return view('leader.manipulat-leader', compact('name_route','type_page','leader'));
     }
+    public function manipulatLeaderStore(Request $request){
+        $supervisor = Supervisor::where('user_id',Auth::id())->first();
+        if($request->has('add')){
+            leader::updateOrCreate(
+                ['supervisor_id' => $supervisor->id,
+                'advisor_id'     => $supervisor->current_advisor,
+                'team'           => $request->team,
+                'name'           => $request->name,
+                'type'           => $request->type,
+            ]);
+            $status = 'success';
+            $msg = "!تم إضافى القائد بنجاح";
+        }
+        if($request->has('update')){
+            leader::updateOrCreate([
+                'id'             => $request->leader_id],
+                ['supervisor_id' => $supervisor->id,
+                'advisor_id'     => $supervisor->current_advisor,
+                'team'           => $request->team,
+                'name'           => $request->name,
+                'type'           => $request->type,
+            ]);
+            $status = 'success';
+            $msg = "!تم التعديل بنجاح";
+        }
+        if($request->has('delete')){
+            $leader = FollowupTeamDuty::where('leader_id',$request->leader_id)->first();
+            if($leader){
+                $status = 'danger';
+                $msg = "لا يمكن حذف القائد";
+            }
+            else{
+                leader::find($request->leader_id)->delete();
+                $status = 'success';
+                $msg = "!تم الحذف بنجاح";
+            }
+         }
+       return redirect()->route($request->name_route)->with(['status' => $status, 'message' => $msg]);
 
+    } 
+    public function withoutSupervisor(){
+        $leaders = leader::where('supervisor_id',NULL)->get();
+        return view('leader.without-supervisor', compact('leaders'));
+
+    }
+    
 }

@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\SupervisorDutyController;
 use App\Http\Controllers\followupTeamController;
+use App\Http\Controllers\LeaderController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -83,13 +85,27 @@ Route::controller(SupervisorDutyController::class)->prefix('supervising')->group
     Route::get('/duties','supervisorDuty')->name('supervisorDuty');
     Route::post('/dutyStore','supervisorDutyStore')->name('supervisorDuty.store');
     Route::get('/followupTeamduty','followupTeamDuty')->name('followupTeamDuty');
-    Route::post('/followupTeamDutyStore','followupTeamDutyStore')->name('followupTeamDuty.store');
 });
 
 ######## Followup team  ########
 Route::controller(followupTeamController::class)->prefix('followupTeam')->group(function () { 
     Route::get('/create','create')->name('followupTeam.create');
     Route::post('/store','store')->name('followupTeam.store');
+});
+######## leader  ########
+Route::controller(LeaderController::class)->prefix('leader')->group(function () { 
+    Route::get('/create/{name_route}/{type_page}','create')->name('leader.create');
+    Route::get('/listAll','listAll')->name('listAll');
+    Route::get('/listBySupervisor','listBy')->name('listBySupervisor');
+    Route::get('/listByAdvisor', 'listBy')->name('listByAdvisor');
+    Route::get('/listByType','listBy')->name('listByType');
+    Route::get('/manipulatLeader/{name_route}/{type_page}/{leader_id}','manipulatLeader')->name('manipulatLeader');
+    Route::post('/manipulatLeaderStore','manipulatLeaderStore')->name('manipulatLeader.store');
+    Route::get('/transferLeader/{name_route}/{leader_id}','transferLeader')->name('transferLeader');
+    Route::post('/transferLeaderStore','transferLeaderStore')->name('transferLeader.store');
+    Route::get('/withoutSupervisor','withoutSupervisor')->name('withoutSupervisor');
+    Route::get('/designation','designation')->name('designation');
+    Route::get('/designationStore','designationStore')->name('designation.store');
 });
 
 
