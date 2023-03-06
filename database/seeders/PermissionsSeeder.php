@@ -58,28 +58,5 @@ class PermissionsSeeder extends Seeder
         $role2->givePermissionTo('transfer leader');
         $role2->givePermissionTo('delete leader');
 
-        // create demo users
-        $password = bcrypt('password123');
-        $user = \App\Models\User::factory()->create([
-            'name' => 'Admin User',
-            'email' => 'admin@example.com',
-            'password' => $password,
-
-        ]);
-        $user->assignRole($role1);
-
-        $user = \App\Models\User::factory()->create([
-            'name' => 'Advisor User',
-            'email' => 'advisor@example.com',
-            'password' => $password,
-        ]);
-        $user->assignRole($role2);
-
-        $user = \App\Models\User::factory()->create([
-            'name' => 'Supervisor User',
-            'email' => 'supervisor@example.com',
-            'password' => $password,
-        ]);
-        $user->assignRole($role3);
     }
 }
