@@ -24,4 +24,23 @@ class SupervisorDuty extends Model
         'points',
         'extra_points'
     ];
+
+    public function advisor(){
+        return $this->belongTo(Advisor::class,'leader_id');
+    }
+
+    public function week(){
+        return $this->belongTo(Week::class,'leader_id');
+    }
+    public function supervisor(){
+        return $this->belongsTo(Supervisor::class,'supervisor_id');
+    }
+    public function notes()
+    {
+        return $this->hasMany(Note::class);
+    }
+    public function criterias()
+    {
+        return $this->hasMany(Criteria::class);
+    }
 }

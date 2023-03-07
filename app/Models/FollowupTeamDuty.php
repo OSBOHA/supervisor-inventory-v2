@@ -36,4 +36,19 @@ class FollowupTeamDuty extends Model
     public function leader(){
         return $this->belongTo(Leader::class,'leader_id');
     }
+
+    public function week(){
+        return $this->belongTo(Week::class,'leader_id');
+    }
+    public function supervisor(){
+        return $this->belongsTo(Supervisor::class);
+    }
+    public function notes()
+    {
+        return $this->hasMany(Note::class);
+    }
+    public function criterias()
+    {
+        return $this->hasMany(Criteria::class);
+    }
 }

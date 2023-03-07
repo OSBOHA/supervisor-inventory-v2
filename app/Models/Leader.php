@@ -21,4 +21,12 @@ class Leader extends Model
     public function advisor(){
         return $this->belongsTo(Advisor::class,'advisor_id');
     }
+    public function followup_team_duties()
+    {
+        return $this->hasMany(FollowupTeamDuty::class);
+    }
+    public function repeated_note()
+    {
+        return $this->hasOne(RepeatedNote::class);
+    }
 }

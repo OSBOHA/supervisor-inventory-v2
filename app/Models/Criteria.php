@@ -14,4 +14,11 @@ class Criteria extends Model
         'task_id',
         'deficiencies',
     ];
+
+    public function followup_team_duty(){
+        return $this->belongsTo(FollowupTeamDuty::class);
+    }
+    public function supervisors_duty(){
+        return $this->belongsTo(SupervisorDuty::class);
+    }
 }
