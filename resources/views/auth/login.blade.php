@@ -64,6 +64,12 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="row mb-0">
+                            <div class="text-center"> don't have an account?
+                                <a class="acolor" href="{{route('register')}}"> Register here</a>
+                            </div>
+                        </div>
+
                     </form>
                 </div>
             </div>

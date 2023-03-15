@@ -15,6 +15,7 @@
             </div>
         </div>
     </div>
+@auth
     <nav class="main-navbar">
         <div class="container">
             <ul>
@@ -51,7 +52,7 @@
                 </li>
 
                 <li class="menu-item  ">
-                    <a href="index.html" class='menu-link'>
+                    <a href="{{ route('home') }}" class='menu-link'>
                         <i class="bi bi-grid-fill"></i>
                         <span>الرئيسية</span>
                     </a>
@@ -59,41 +60,51 @@
 
                 <li class="menu-item  ">
                     <a href="index.html" class='menu-link'>
-                    <i class="bi bi-pencil-square"></i>
-                        <span>ورقة الأسبوع 2</span>
-                    </a>
-                </li>
-                <li class="menu-item  ">
-                    <a href="index.html" class='menu-link'>
                     <i class="bi bi-newspaper"></i>
                         <span> عرض ورقة الأسبوع</span>
                     </a>
                 </li>
+            @if(auth::user()->hasRole('supervisor'))
+                <li class="menu-item  ">
+                    <a href="{{ route('followupTeam.create') }}" class='menu-link'>
+                    <i class="bi bi-pencil-square"></i>
+                        <span>جرد عمل القادة</span>
+                    </a>
+                </li>
+
                 <li class="menu-item  has-sub">
-                    <a href="#" class='menu-link'>
+                    <a href="{{route('listBySupervisor',['supervisor_id'=>auth::id()])}}" class='menu-link'>
                     <i class="bi bi-people"></i>
-                        <span>القادة في فريقي</span>
+                        <span>القادة في فريقي </span>
                     </a>
                     <div class="submenu ">
                         <!-- Wrap to submenu-group-wrapper if you want 3-level submenu. Otherwise remove it. -->
                         <div class="submenu-group-wrapper">
 
                             <ul class="submenu-group">
-                                <li class="submenu-item  ">
-                                    <a href="component-badge.html" class='submenu-link'>Leader 1</a>
-                                </li>
-
-                                <li class="submenu-item  ">
-                                    <a href="component-breadcrumb.html" class='submenu-link'>Leader2</a>
-                                </li>
-                                <li class="submenu-item  ">
-                                    <a  href="{{route('leader.create',['listAll','add'])}}" class='submenu-link'>إضافة قائد</a>
-                                </li>
-
+                                @foreach(auth::user()->supervisor->leaders as $leader)
+                                    <li class="submenu-item  ">
+                                        <a href="component-badge.html" class='submenu-link'>{{$leader->name}}</a>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
                 </li>
+            @elseif (auth::user()->hasRole('advisor'))
+                <li class="menu-item  ">
+                    <a href="{{ route('supervisorDuty') }}" class='menu-link'>
+                    <i class="bi bi-pencil-square"></i>
+                        <span>مهام المراقب الأسبوعية</span>
+                    </a>
+                </li>
+                <li class="menu-item  ">
+                    <a href="{{ route('supervisingTeam') }}" class='menu-link'>
+                    <i class="bi bi-pencil-square"></i>
+                        <span>ورقة الأسبوع</span>
+                    </a>
+                </li>
+
                 <li class="menu-item  has-sub">
                     <a href="#" class='menu-link'>
                     <i class="bi bi-person"></i>
@@ -104,21 +115,22 @@
                         <div class="submenu-group-wrapper">
 
                             <ul class="submenu-group">
-                                <li class="submenu-item  ">
-                                    <a href="component-badge.html" class='submenu-link'>super 1</a>
-                                </li>
+                            @foreach(auth::user()->advisor->supervisors as $supervisor)
 
                                 <li class="submenu-item  ">
-                                    <a href="component-breadcrumb.html" class='submenu-link'>super 2</a>
+                                    <a href="component-badge.html" class='submenu-link'>{{$supervisor->team}}</a>
                                 </li>
+                            @endforeach
 
                             </ul>
                         </div>
                     </div>
                 </li>
+                @endif
             </ul>
 
         </div>
     </nav>
+@endauth
 
 </header>

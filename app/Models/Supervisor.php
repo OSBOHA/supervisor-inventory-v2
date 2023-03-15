@@ -18,6 +18,9 @@ class Supervisor extends Model
         return $this->belongsTo(User::class,'user_id');
     }
     public function advisor(){
-        return $this->belongsTo(Advisor::class,'advisor_id');
+        return $this->belongsTo(Advisor::class,'current_advisor');
+    }
+    public function leaders(){
+        return $this->hasMany(Leader::class,'supervisor_id');
     }
 }
