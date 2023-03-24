@@ -381,7 +381,7 @@
                                                 </div>
                                                 <!-- START VALIDATION  -->
                                                 <div class="alert alert-danger mt-2 p-2 opacity-50 validation-alert" role="alert" id="zero_mark_NO_required">
-                                                    هذا الحقل مطلوب
+                                                    هذا الحقل مطلوب بحال وجود أصفار
                                                 </div>
                                                 <div class="alert alert-danger mt-2 p-2 opacity-50 validation-alert" role="alert" id="zero_mark_NO_number">
                                                     يجب أن تكون قيمة الحقل عددية

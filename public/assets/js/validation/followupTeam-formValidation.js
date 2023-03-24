@@ -448,9 +448,13 @@ $('[name="zero_mark"]').click(function () {
     if ($('#zero_mark_1').is(':checked')) {
         isZerosNoValid()
         $('.zero_mark_NO').removeAttr('disabled');
+        $("#zero_mark_NO_required").css("display", "block");
+
     } else {
         $('#zero_mark_NO').val('');
         $('.zero_mark_NO').attr('disabled', 'disabled');
+        $("#zero_mark_NO_required").css("display", "none");
+
     }
 });
 $("#zero_mark_NO").change(function () {
@@ -492,9 +496,11 @@ $('[name="frozen_ambassadors"]').click(function () {
     if ($('#frozen_ambassadors_1').is(':checked')) {
         isFrozenNoValid()
         $('.frozen_ambassadors_NO').removeAttr('disabled');
+        $("#frozen_ambassadors_NO_required").css("display", "block");
     } else {
         $('#frozen_ambassadors_NO').val('');
         $('.frozen_ambassadors_NO').attr('disabled', 'disabled');
+        $("#frozen_ambassadors_NO_required").css("display", "none");
     }
 });
 $("#frozen_ambassadors_NO").change(function () {
