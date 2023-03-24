@@ -9,6 +9,11 @@
 @endsection
 
 @section('content')
+@if (session('message'))
+    <div class="alert alert-{{ session('status') }}">
+        {{ session('message') }}
+    </div>
+@endif 
 <!-- START TITLE-->
 <div class="col-12">
     <div class="card">
@@ -49,7 +54,6 @@
                             @if($type_page == "update")
                             <div class="form-group">
                                 <input class="form-check-input" type="hidden" name="leader_id" id="leader_id" value="{{$leader->id}}">
-                                <input class="form-check-input" type="hidden" name="name_route" id="name_route" value="{{$name_route}}">
                                 <div class="form-group mb-3">
                                     <label for="name" class="form-label">اسم القائد</label>
                                     <input type="text" name='name' class="form-control" id="leaderName" rows="3" value="{{$leader->name}}">
@@ -75,7 +79,6 @@
                                 @if($type_page == "add")
                                 <div class="form-group">
                                     <input class="form-check-input" type="hidden" name="leader_id" id="leader_id">
-                                    <input class="form-check-input" type="hidden" name="name_route" id="name_route" value="{{$name_route}}">
 
                                     <div class="form-group mb-3">
                                         <label for="name" class="form-label">اسم القائد</label>

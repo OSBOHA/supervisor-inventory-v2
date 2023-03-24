@@ -11,6 +11,7 @@
     }
 </style>
 @section('page_title')
+
 <div class="row" style="direction: rtl">
     <div class="col-12 col-md-6 order-md-1 order-first" style="direction: rtl">
         <!-- <h3>الجرد الأسبوعي</h3> -->
@@ -20,6 +21,7 @@
 
 @section('content')
 <!-- START SELECT LEADER -->
+<meta name="csrf-token" content="{{ csrf_token() }}" />
 
 <div class="col-12">
     <div class="card">
@@ -33,13 +35,12 @@
                     <div class="col-12 mb-4">
                         <h6>اختر القائد الذي تريد إدخال الجرد الإسبوعي له</h6>
                         <form action="#" id="select_form" autocomplete="off">
-
                             <div class="input-group mb-3 ">
                                 <select class="form-select" id="inputGroupSelect01">
                                     <option selected>القادة في فريقي</option>
                                     @if(auth()->user()->hasRole('advisor'))
                                         @foreach ($supervisors as $supervisor)
-                                        <option value="{{$supervisor->id}}">{{$supervisor->user->name}}</option>
+                                            <option value="{{$supervisor->id}}">{{$supervisor->user->name}}</option>
                                         @endforeach
                                     @endif   
                                     @if(auth()->user()->hasRole('supervisor'))
@@ -47,7 +48,6 @@
                                         <option value="{{$leader->id}}">{{$leader->name}}</option>
                                         @endforeach
                                     @endif
-                                   
                                 </select>
                             </div>
                         </form>
@@ -63,9 +63,19 @@
 
 <section id="multiple-column-form">
     <div class="row match-height" id="followup_team_duties_form" style="display: none;">
-        <form action="{{route('followupTeam.store')}}" method="POST" enctype="multipart/form-data" id="form">
-            @csrf
-            <input class="form-check-input" type="hidden" name="leader_id" id="leader_id" value="0">
+            
+            @if(auth()->user()->hasRole('advisor'))
+            <form action="{{route('followupTeam.supervisor_store')}}" method="POST" enctype="multipart/form-data" id="form">
+                @csrf
+                <input class="form-check-input" type="hidden" name="supervisor_id" id="leader_OR_supervisor_id" value="0">
+            @endif
+            @if(auth()->user()->hasRole('supervisor'))
+            <form action="{{route('followupTeam.leader_store')}}" method="POST" enctype="multipart/form-data" id="form">
+                @csrf
+                <input class="form-check-input" type="hidden" name="leader_id" id="leader_OR_supervisor_id" value="0">
+            @endif
+            
+
 
             <!-- START TEAM iNFO -->
             <div class="col-12">
@@ -79,8 +89,9 @@
                                 <div class="col-md-6 col-12">
                                     <div class="form-group has-icon-left">
                                         <h6> عدد السفراء</h6>
+
                                         <div class="position-relative">
-                                            <input type="text" class="form-control" placeholder=" عدد السفراء" id="team_members" name="team_members">
+                                            <input type="text" class="form-control" placeholder=" عدد السفراء" id="team_members" name="team_members" value="" >
                                             <div class="form-control-icon">
                                                 <i class="bi bi-person"></i>
                                             </div>
@@ -852,6 +863,10 @@
 <!-- END SUPERVISOR DUTIES IMAGE -->
 
 <script src="{{asset('assets/js/validation/followupTeam-formValidation.js')}}"></script>
-
-
+<script type="text/javascript">
+      
+     
+    
+  
+</script>
 @endsection

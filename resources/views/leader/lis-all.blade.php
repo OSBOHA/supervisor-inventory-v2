@@ -4,11 +4,7 @@
 
 @section('content')
 
-@if (session('message'))
-    <div class="alert alert-{{ session('status') }}">
-        {{ session('message') }}
-    </div>
-@endif 
+
 <div class="col-12">
     <div class="row">
         <div class="card">
@@ -33,10 +29,10 @@
                                 <td>10</td>
                                 <td>
                                     <span ></span>
-                                    <a href="{{route('manipulatLeader',['listAll','update',$leader->id])}}">
+                                    <a href="{{route('manipulatLeader',['update',$leader->id])}}">
                                         <span class="badge bg-success">تعديل</span>
                                     </a>
-                                    <a href="{{route('transferLeader',['listAll',$leader->id])}}">    
+                                    <a href="{{route('transferLeader',[$leader->id])}}">    
                                         <span class="badge bg-success">نقل</span>
                                     </a>
                                 </td>
