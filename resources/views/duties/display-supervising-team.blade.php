@@ -158,19 +158,19 @@
                     <div class="card-body">
                         <div class="row mt-3">
                             <div class="col-4">
-                                <div class="col-12"><canvas class="w-100" id="weekly-posts-1"></canvas></div>
+                                <div class="col-12"><canvas class="w-100" id="monthly-posts-1"></canvas></div>
                                 <div class="col-12 text-center mt-2">
                                     <h6>منشور العائدون</h6>
                                 </div>
                             </div>
                             <div class="col-4">
-                                <div class="col-12"><canvas class="w-100" id="weekly-posts-2"></canvas></div>
+                                <div class="col-12"><canvas class="w-100" id="monthly-posts-2"></canvas></div>
                                 <div class="col-12 text-center mt-2">
                                 <h6>منشور عضو جديد</h6>
                                 </div>
                             </div>
                             <div class="col-4">
-                                <div class="col-12"><canvas class="w-100" id="weekly-posts-2"></canvas></div>
+                                <div class="col-12"><canvas class="w-100" id="monthly-posts-3"></canvas></div>
                                 <div class="col-12 text-center mt-2">
                                 <h6>منشو المنسحبون</h6>
                                 </div>
@@ -183,6 +183,37 @@
             </div>
         </div>
         <!-- END MONTHLY POSTS -->
+
+        <!-- START NEWS POSTS -->
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header" style="background:#dce7f1;">
+                    <h4 class="card-title">  ايصال الأخبار</h4>
+                </div>
+
+                <div class="card-content">
+                    <div class="card-body">
+                        <div class="row mt-3">
+                            <div class="col-6">
+                                <div class="col-12"><canvas class="w-100" id="news-posts-1"></canvas></div>
+                                <div class="col-12 text-center mt-2">
+                                    <h6> النقاش المنهجي</h6>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="col-12"><canvas class="w-100" id="news-posts-2"></canvas></div>
+                                <div class="col-12 text-center mt-2">
+                                <h6>  دورة القيادة </h6>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END NEWS POSTS -->
 
         <!-- START NOTES -->
         <div class="col-12">

@@ -25,11 +25,11 @@
                                 <h4 class="mb-2">{{$leader->name}}</h4>
                                 <p class="text-muted mb-4">عدد السفراء<span class="mx-2">|</span> <a href="#!">فريق المتابعة</a></p>
                        
-                                <a class="btn btn-primary btn-rounded btn-lg"href="{{route('manipulatLeader',['listAll','update',$leader->id])}}">
+                                <a class="btn btn-primary btn-rounded btn-lg"href="{{route('manipulatLeader',['update',$leader->id])}}">
                                     تعديل
                                  </a>
 
-                                 <a class="btn btn-primary btn-rounded btn-lg"href="{{route('transferLeader',['listAll',$leader->id])}}">
+                                 <a class="btn btn-primary btn-rounded btn-lg"href="{{route('transferLeader',[$leader->id])}}">
                                     نقل
                                  </a>
 

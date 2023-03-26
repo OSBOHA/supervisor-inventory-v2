@@ -43,10 +43,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
     public function supervisor(){
-        return $this->hasOne(Supervisor::class);
+        return $this->hasone(Supervisor::class,'user_id');
     }
     public function advisor(){
-        return $this->hasOne(Advisor::class);
+        return $this->hasone(Advisor::class,'user_id');
     }
-    
 }

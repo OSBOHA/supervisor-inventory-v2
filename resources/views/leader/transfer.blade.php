@@ -4,7 +4,11 @@
 
 
 @section('content')
-
+@if (session('message'))
+    <div class="alert alert-{{ session('status') }}">
+        {{ session('message') }}
+    </div>
+@endif 
 
 <div class="col-12">
     <div class="row">
@@ -24,15 +28,13 @@
                                     <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava2-bg.webp" class="rounded-circle img-fluid" style="width: 100px;" />
                                 </div>
                                 <input class="form-check-input" type="hidden" name="leader_id" id="leader_id" value="{{$leader->id}}">
-                                <input class="form-check-input" type="hidden" name="name_route" id="name_route" value="{{$name_route}}">
 
 
                                 <h4 class="mb-2"> {{$leader->name}}</h4>
                                 <p class="text-muted mb-4"> {{$leader->type}} <span class="mx-2">|</span> 
                                     <!-- if leader have a Supervisor!-->
-                                    @if($name_route !="withoutSupervisor")
-                                    <a href="#!"> {{$leader->supervisor->user->name}} </a></p>
-                                    @endif
+                                    <a href="#!"> {{$leader->supervisor->user->name ??'لايوجد مشرف'}} </a></p>
+
                                 <label for="type" class="form-label">المراقبون</label>
                                     <select name="supervisor_id" class="form-control form-select">
                                         @foreach($supervisors as $supervisor)
