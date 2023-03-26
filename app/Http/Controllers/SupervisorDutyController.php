@@ -16,6 +16,45 @@ use App\Models\Advisor;
 
 class SupervisorDutyController extends Controller
 {
+    
+    public function displaySupervisingTeam()
+    { 
+
+        $id = 2;
+        $advisor = Advisor::findOrFail($id);
+        $supervisorsIDs = $advisor->supervisors->pluck('id')->toArray();
+        $supervisorDuties= SupervisorDuty::whereIn("supervisor_id" ,$supervisorsIDs)->get();
+        $v= SupervisorDuty::whereIn("supervisor_id" ,$supervisorsIDs)->pluck('follow_up_post')->toArray();
+
+        foreach ($supervisorDuties as $SupervisorDuty){
+            $data['teams'][] = $SupervisorDuty->supervisor->team . "-". $SupervisorDuty->leader_members ." leaders";
+            $data['teamsFinalMark'][] = $SupervisorDuty->team_final_mark;
+           // $data['follow_up_post'][] = $SupervisorDuty->follow_up_post;
+           // $data['mark_problems_post'][] = $SupervisorDuty->mark_problems_post;
+            $data['returning_ambassadors_post'][] = $SupervisorDuty->returning_ambassadors_post;
+            $data['new_ambassadors_post'][] = $SupervisorDuty->returning_ambassadors_post;
+            $data['withdrawn_ambassadors_post'][] = $SupervisorDuty->returning_ambassadors_post;
+            $data['leader_training'][] = $SupervisorDuty->returning_ambassadors_post;
+        }
+        dd($v);
+         $data['follow_up_post'][]= SupervisorDuty::whereIn("supervisor_id" ,$supervisorsIDs)->where("follow_up_post","published")->count();
+         $data['follow_up_post'][]= SupervisorDuty::whereIn("supervisor_id" ,$supervisorsIDs)->where("follow_up_post","didnt publish")->count();
+         $data['follow_up_post'][]= SupervisorDuty::whereIn("supervisor_id" ,$supervisorsIDs)->where("follow_up_post","published instead")->count();
+         $data['follow_up_post'][]= SupervisorDuty::whereIn("supervisor_id" ,$supervisorsIDs)->where("follow_up_post","incomplete")->count();
+
+         $data['mark_problems_post'][]= SupervisorDuty::whereIn("supervisor_id" ,$supervisorsIDs)->where("mark_problems_post","published")->count();
+         $data['mark_problems_post'][]= SupervisorDuty::whereIn("supervisor_id" ,$supervisorsIDs)->where("mark_problems_post","didnt publish")->count();
+         $data['mark_problems_post'][]= SupervisorDuty::whereIn("supervisor_id" ,$supervisorsIDs)->where("mark_problems_post","published instead")->count();
+         $data['mark_problems_post'][]= SupervisorDuty::whereIn("supervisor_id" ,$supervisorsIDs)->where("mark_problems_post","incomplete")->count();
+      // dd( $data['mark_problems_post']);
+
+        $data = json_encode($data);
+
+        
+        return view('duties.display-supervising-team',compact('data'));//'teams','teamsFinalMark'));
+
+    }
+
     public function supervisorDuty()
     { 
         $advisor = Advisor::where('user_id',Auth::id())->first();

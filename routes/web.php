@@ -80,6 +80,7 @@ Route::get('/supervisors/list-one', function () {
 
 ######## Supervising task and duties ########
 Route::controller(SupervisorDutyController::class)->prefix('supervising')->group(function () { 
+    Route::get('/display/supervising/team','displaySupervisingTeam')->name('display.supervisingTeam');
     Route::get('/team','supervisingTeam')->name('supervisingTeam');
     Route::post('/teamStore','supervisingTeamStore')->name('supervisingTeam.store');
     Route::get('/duties','supervisorDuty')->name('supervisorDuty');

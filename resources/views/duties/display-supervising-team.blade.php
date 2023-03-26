@@ -100,6 +100,7 @@
 
                 <div class="card-content">
                     <div class="card-body">
+                    <!--
                         <div class="row">
                             <div class="col-12 text-center">
                                 <label>
@@ -123,30 +124,65 @@
                                 </label>
                             </div>
                         </div>
-
+                    -->
                         <div class="row mt-3">
                             <div class="col-6">
                                 <div class="col-12"><canvas class="w-100" id="weekly-posts-1"></canvas></div>
+                                <div class="col-12 text-center mt-2">
+                                    <h6>منشور المتابعة</h6>
+                                </div>
                             </div>
                             <div class="col-6">
                                 <div class="col-12"><canvas class="w-100" id="weekly-posts-2"></canvas></div>
                                 <div class="col-12 text-center mt-2">
-                                    <h6>النقص</h6>
-                                    <p>
-                                        <span> - Standard 1</span>
-                                        <br />
-                                        <span> - Standard 2</span>
-                                        <br />
-                                        <span> - Standard 3</span>
-                                    </p>
+                                <h6>منشور مشاكل التقيم</h6>
                                 </div>
                             </div>
                         </div>
+
+
                     </div>
                 </div>
             </div>
         </div>
         <!-- END WEEKLY POSTS -->
+
+        <!-- START MONTHLY POSTS -->
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header" style="background:#dce7f1;">
+                    <h4 class="card-title"> المنشورات الشهرية</h4>
+                </div>
+
+                <div class="card-content">
+                    <div class="card-body">
+                        <div class="row mt-3">
+                            <div class="col-4">
+                                <div class="col-12"><canvas class="w-100" id="weekly-posts-1"></canvas></div>
+                                <div class="col-12 text-center mt-2">
+                                    <h6>منشور العائدون</h6>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="col-12"><canvas class="w-100" id="weekly-posts-2"></canvas></div>
+                                <div class="col-12 text-center mt-2">
+                                <h6>منشور عضو جديد</h6>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="col-12"><canvas class="w-100" id="weekly-posts-2"></canvas></div>
+                                <div class="col-12 text-center mt-2">
+                                <h6>منشو المنسحبون</h6>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END MONTHLY POSTS -->
 
         <!-- START NOTES -->
         <div class="col-12">
@@ -230,8 +266,13 @@
 
 <script src="{{asset('assets/vendors/chartjs/Chart.min.js')}}"></script>
 <script src="{{asset('assets/js/pages/ui-chartjs.js')}}"></script>
+<script type="text/javascript">
+    var cData = JSON.parse(`<?php echo $data; ?>`);
 
-<script src="{{asset('assets/js/displayCharts/supervising-team.js')}}"></script>
+</script>
+<script src="{{asset('assets/js/displayCharts/supervising-team.js')}}">
+    
+</script>
 
 
 @endsection
