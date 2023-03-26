@@ -21,4 +21,7 @@ class Leader extends Model
     public function advisor(){
         return $this->belongsTo(Advisor::class,'advisor_id');
     }
+    public function followupTeamDuty(){
+        return $this->hasone(FollowupTeamDuty::class,'leader_id');
+    }
 }

@@ -11,6 +11,7 @@ class FollowupTeamDuty extends Model
     protected $fillable = [
         'leader_id',
         'week_id',
+        'advisor_id',
         'supervisor_id',
         'last_edit_by',
         'team_final_mark',

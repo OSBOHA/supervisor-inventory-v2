@@ -8,64 +8,41 @@ use App\Models\Supervisor;
 use App\Models\SupervisorDuty;
 use App\Models\Week;
 use App\Models\Criteria;
-use App\Models\SupervisorTask;
 use App\Models\Advisor;
-
-
+use Response;
 
 
 class SupervisorDutyController extends Controller
 {
-    public function supervisorDuty()
-    { 
-        $advisor = Advisor::where('user_id',Auth::id())->first();
-        $supervisors = Supervisor::where('current_advisor',$advisor->id)->get();
-        return view('duties.super-duties',compact('supervisors'));
-    }
-
-    public function supervisorDutyStore(Request $request)
-    {
-        $request->validate([
-            'supervisor_id'=> 'required',
-            'supervisor_reading'=> 'required',
-        ]);
-        $current_week = Week::latest()->pluck('id')->first();
-        $advisor = Advisor::where('user_id',Auth::id())->first(); 
-        SupervisorTask::updateOrCreate(
-            ['supervisor_id' => $request->supervisor_id , "week_id" => $current_week],
-            ['advisor_id' => $request->advisor_id,
-            'advisor_id' => $advisor->id,
-            'thursday_task' => ($request->supervisor_duties && in_array('thursday_task', $request->supervisor_duties)) ? 1 : 0,
-            'final_mark_screenshot' => ($request->supervisor_duties && in_array('final_mark_screenshot', $request->supervisor_duties)) ? 1 : 0,
-            'final_mark_confirm' => ($request->supervisor_duties && in_array('final_mark_confirm', $request->supervisor_duties)) ? 1 : 0,
-            'supervisor_reading' => $request->supervisor_reading,
-            'points' => ($request->supervisor_duties) ? count($request->supervisor_duties)*2 : 0,
-            'no_of_pages' => ($request->no_of_pages) ? $request->no_of_pages : 0
-        ]);
-
-        return redirect()->back();
-    }
-
+    
+     /**
+     * Bring all supervisors of Auth advisor to show supervisors in view (duties.supervising-team).
+     * @return supervisors;
+     */
     public function supervisingTeam()
     { 
-        $supervisors = Supervisor::where('current_advisor',3)->get();//Auth::id())->get();
+        $supervisors = Supervisor::where('current_advisor',auth()->user()->advisor->id)->get();
         return view('duties.supervising-team',compact('supervisors'));
+
+      
     }
 
+     /**
+     * Store the value of valdions that are entered by auth advisor.
+     * 
+     * Detailed Steps:
+     *  1- Advisor entered this valdions:
+     *    [leader_members,team_final_mark,follow_up_post,mark_problems_post,
+     *     returning_ambassadors_post,new_ambassadors_post,withdrawn_ambassadors_post,
+     *     leader_training,discussion_post] .
+     *  2- Advisor click "save" button
+     *  3- This function[supervisingTeamStore] take the vlaues and calculation of the points 
+     *     and stored in "supervisor_duties" Table.
+     * cluac.
+     * @param  Request  $request
+     */
     public function supervisingTeamStore(Request $request)
     {   
-     /*   $request->validate([
-            'supervisor_id'  => 'required',
-            'leader_members'  => 'required',
-            'team_final_mark'  => 'required',
-            'follow_up_post'  => 'required',
-            'mark_problems_post'  => 'required',
-            'returning_ambassadors_post'  => 'required',
-            'new_ambassadors_post'  => 'required',
-            'withdrawn_ambassadors_post'  => 'required',
-            'leader_training'  => 'required',
-            'discussion_post'  => 'required',
-        ]);*/
 
         $current_week = Week::latest()->pluck('id')->first();
         $points = 0 ;
@@ -99,11 +76,12 @@ class SupervisorDutyController extends Controller
         } elseif ($request->discussion_post =='incomplete'){
             $points += 2;
         }
-            $advisor = Advisor::where('user_id',Auth::id())->first(); 
 
             $duty = SupervisorDuty::updateOrCreate(
-                ["supervisor_id" => $request->supervisor_id , "week_id" => $current_week],
-                ['advisor_id' =>  $advisor->id, 
+                ['supervisor_id' => $request->supervisor_id ,
+                 'advisor_id' => auth()->user()->advisor->id,
+                 'week_id' => $current_week],
+                [
                 'leader_members' =>  $request->leader_members,
                 'team_final_mark' => $request->team_final_mark,
                 'follow_up_post' =>  $request->follow_up_post,
@@ -136,15 +114,34 @@ class SupervisorDutyController extends Controller
                 );
             } elseif($request->mark_problems_post == 'published'){
                 $duty->points += 6 ;
-            }      
+            }   
+            
+            
             $duty->update(['points' =>$duty->points]); 
             return redirect()->back();
     }
-    public function followupTeamDuty()
-    { 
-        $advisor = Advisor::where('user_id',Auth::id())->first(); 
-        $supervisors = Supervisor::where('current_advisor',$advisor->id)->get();
-        return view('duties.followup-team',compact('supervisors'));
+   
+    /**
+         *show Supervisor duties to select supervisor.
+    */
+    public function show(Request $request) {
+
+        $request->validate([
+            'supervisor_id' => 'required',
+        ]);
+
+        $duty = SupervisorDuty::where('supervisor_id',$request->supervisor_id)->where('advisor_id',auth()->user()->advisor->id)
+                                                ->first();
+        if($duty){
+        $criteria_1 = (Criteria::where('supervisor_duty_id',$duty->id) ->where('task_id',1)->first());
+        $criteria_2 = (Criteria::where('supervisor_duty_id',$duty->id) ->where('task_id',2)->first());
+        $criteria_3 = (Criteria::where('supervisor_duty_id',$duty->id) ->where('task_id',3)->first());
+
+        return Response::json(['duty'=>$duty,'criteria_1'=>$criteria_1,'criteria_2'=>$criteria_2,'criteria_3'=>$criteria_3]);
+        }
+        else{
+        return Response::json(['duty'=>$duty,'criteria_1'=>NULL,'criteria_2'=>NULL,'criteria_3'=>NULL]);
+        }
     }
 
 

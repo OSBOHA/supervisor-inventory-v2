@@ -13,8 +13,17 @@ use App\Models\FollowupTeamDuty;
 
 class LeaderController extends Controller
 {
-    public function create($name_route,$type_page){
-        return view ('leader.manipulat-leader',compact('name_route','type_page'));
+
+     /**
+      *  Selected the page that user wanted.
+      * @param  $name_route,$type_page.
+      *  There is tow type of page :-
+      *    1- add(in this page the user can add a new leader).
+      *    2- update(in this page the user can update exsit leader).
+     */
+    
+    public function create($type_page){
+        return view ('leader.manipulat-leader',compact('type_page'));
     }
     
     public function swap_leader(Request $request){
@@ -36,11 +45,17 @@ class LeaderController extends Controller
         else
            echo "The supervisor is not found";
     }
-    public function transferLeader($name_route,$leader_id){
+     /**
+      *  Bring all supervisors of Auth advisor to show supervisors in view (leader.transfer).
+     */
+    public function transferLeader($leader_id){
         $leader = leader::find($leader_id);
-        $supervisors = supervisor::where('current_advisor', 3)->get();
-        return view('leader.transfer', compact('leader','supervisors','name_route'));
+        $supervisors = supervisor::where('current_advisor', auth()->user()->Supervisor->current_advisor)->get();
+        return view('leader.transfer', compact('leader','supervisors'));
     }
+    /**
+      *  transfer a selected Leader to anthor supervisor and check is supervisor active.
+     */
     public function transferLeaderStore(Request $request){
         $validator = Validator::make($request->all(), [
             'leader_id' => 'required',
@@ -59,8 +74,11 @@ class LeaderController extends Controller
             $msg = "هذا القائد غير موجود";
 
         }
-        return redirect()->route($request->name_route)->with(['status' => $status, 'message' => $msg]);
+        return back()->with(['status' => $status, 'message' => $msg]);
     }
+     /**
+      *  after transfer a Leader from supervisor, check is supervisor active.
+     */
     public function check_active_supervisor($supervisor_id){
 
         $supervisor = leader::where('supervisor_id',$supervisor_id)->get();
@@ -75,19 +93,18 @@ class LeaderController extends Controller
             //echo "this supervisor is not active";
         }
     }
+    /**
+      *  Show all leaders by:supervisor or advisor or type of leader['withdrawn', 'support', 'permanent']  in view (leader.list-all-by).
+     */
 
-    public function listBy(Request $request)
+    public function listBy($type_page,$user_id)
     {
-        $validator = Validator::make($request->all(), [
-            'supervisor_id' => 'required_without:advisor_id,type',
-            'advisor_id' => 'required_without:supervisor_id,type',
-            'type' => 'required_without:supervisor_id,advisor_id',
-        ]);
-        if($request->has('supervisor_id'))
-            $leaders = leader::where('supervisor_id', $request->supervisor_id)->get();
-        else if($request->has('advisor_id'))
-            $leaders = leader::where('advisor_id', $request->advisor_id)->get();
-        else if($request->has('type'))
+        
+        if($type_page =='supervisor')
+            $leaders = leader::where('supervisor_id', $user_id)->get();
+        else if($type_page =='advisor')
+            $leaders = leader::where('advisor_id', $user_id)->get();
+        else if($type_page =='type')
             $leaders = leader::where('type', $request->type)->get();
         if($leaders->isNotEmpty()){
             return view('leader.list-all-by', compact('leaders'));
@@ -97,35 +114,47 @@ class LeaderController extends Controller
         }
        
     }
+    /**
+      *  Show all leaders in view (leader.lis-all).
+     */
     public function listAll()
     {
         $leaders = leader::get();
         return view('leader.lis-all', compact('leaders'));
 
     }
-    public function manipulatLeader($name_route,$type_page,$leader_id)
+     /**
+      * get information about a selected leader and show it in view (leader.manipulat-leader).
+     */
+    public function manipulatLeader($type_page,$leader_id)
     {
         $leader = leader::where('id',$leader_id)->first();
-        return view('leader.manipulat-leader', compact('name_route','type_page','leader'));
+        return view('leader.manipulat-leader', compact('type_page','leader'));
     }
+    /**
+      * manipulat Leader:
+      * 1)Add new leader.
+      * 2)Update exsite leader.
+      * 3)Delete leader[in one case:if this leader don't have date in FollowupTeamDuty table].
+     */
     public function manipulatLeaderStore(Request $request){
-        $supervisor = Supervisor::where('user_id',Auth::id())->first();
+        
         if($request->has('add')){
             leader::updateOrCreate(
-                ['supervisor_id' => $supervisor->id,
-                'advisor_id'     => $supervisor->current_advisor,
+                ['supervisor_id' => auth()->user()->Supervisor->id,
+                'advisor_id'     => auth()->user()->Supervisor->current_advisor,
                 'team'           => $request->team,
                 'name'           => $request->name,
                 'type'           => $request->type,
             ]);
             $status = 'success';
-            $msg = "!تم إضافى القائد بنجاح";
+            $msg = "!تم إضافة القائد بنجاح";
         }
         if($request->has('update')){
             leader::updateOrCreate([
                 'id'             => $request->leader_id],
-                ['supervisor_id' => $supervisor->id,
-                'advisor_id'     => $supervisor->current_advisor,
+                ['supervisor_id' => auth()->user()->Supervisor->id,
+                'advisor_id'     => auth()->user()->Supervisor->current_advisor,
                 'team'           => $request->team,
                 'name'           => $request->name,
                 'type'           => $request->type,
@@ -145,7 +174,7 @@ class LeaderController extends Controller
                 $msg = "!تم الحذف بنجاح";
             }
          }
-       return redirect()->route($request->name_route)->with(['status' => $status, 'message' => $msg]);
+       return back()->with(['status' => $status, 'message' => $msg]);
 
     } 
     public function withoutSupervisor(){

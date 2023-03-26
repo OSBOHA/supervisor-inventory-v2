@@ -20,4 +20,7 @@ class Supervisor extends Model
     public function advisor(){
         return $this->belongsTo(Advisor::class,'advisor_id');
     }
+    public function leaders(){
+        return $this->hasMany(Leader::class,'supervisor_id');
+    }
 }

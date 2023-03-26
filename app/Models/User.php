@@ -42,4 +42,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function supervisor(){
+        return $this->hasone(Supervisor::class,'user_id');
+    }
+    public function advisor(){
+        return $this->hasone(Advisor::class,'user_id');
+    }
 }

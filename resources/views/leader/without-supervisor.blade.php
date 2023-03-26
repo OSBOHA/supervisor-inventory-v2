@@ -30,7 +30,7 @@
                                 <td>{{$leader->team}}</td>
                                 <td>10</td>
                                 <td>
-                                    <a href="{{route('transferLeader',['withoutSupervisor',$leader->id])}}">    
+                                    <a href="{{route('transferLeader',[$leader->id])}}">    
                                         <span class="badge bg-success">تعيين</span>
                                     </a>
                                 </td>

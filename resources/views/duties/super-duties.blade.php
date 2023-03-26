@@ -57,7 +57,7 @@
                 </div>
                 <div class="card-content">
                     <div class="card-body">
-                        <form action="{{route('supervisorDuty.store')}}" method="POST" enctype="multipart/form-data">
+                        <form action="{{route('supervisorTask.store')}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <input class="form-check-input" type="hidden" name="supervisor_id" id="supervisor_id" value="0">
