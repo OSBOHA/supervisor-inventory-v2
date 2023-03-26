@@ -24,4 +24,8 @@ class SupervisorDuty extends Model
         'points',
         'extra_points'
     ];
+
+    public function supervisor(){
+        return $this->belongsTo(Supervisor::class,'supervisor_id');
+    }
 }

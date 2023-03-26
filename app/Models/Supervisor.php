@@ -23,7 +23,4 @@ class Supervisor extends Model
     public function leaders(){
         return $this->hasMany(Leader::class,'supervisor_id');
     }
-    public function leaders(){
-        return $this->hasMany(Leader::class,'supervisor_id');
-    }
 }

@@ -15,10 +15,89 @@ use Response;
 class SupervisorDutyController extends Controller
 {
     
+    public function displaySupervisingTeam()
+    { 
+        $advisor = Advisor::findOrFail(Auth::id());
+        $supervisorsIDs = $advisor->supervisors->pluck('id')->toArray();
+        $supervisorDuties= SupervisorDuty::whereIn("supervisor_id" ,$supervisorsIDs)->get();
+
+        foreach ($supervisorDuties as $SupervisorDuty){
+            $data['teams'][] = $SupervisorDuty->supervisor->team . "-". $SupervisorDuty->leader_members ." leaders";
+            $data['teamsFinalMark'][] = $SupervisorDuty->team_final_mark;
+        }
+        //follow_up_post
+         $data['follow_up_post'][]= $supervisorDuties->where("follow_up_post","published")->count();
+         $data['follow_up_post'][]= $supervisorDuties->where("follow_up_post","didnt publish")->count();
+         $data['follow_up_post'][]= $supervisorDuties->where("follow_up_post","published instead")->count();
+         $data['follow_up_post'][]= $supervisorDuties->where("follow_up_post","incomplete")->count();
+        //mark_problems_post
+         $data['mark_problems_post'][]= $supervisorDuties->where("mark_problems_post","published")->count();
+         $data['mark_problems_post'][]= $supervisorDuties->where("mark_problems_post","didnt publish")->count();
+         $data['mark_problems_post'][]= $supervisorDuties->where("mark_problems_post","published instead")->count();
+         $data['mark_problems_post'][]= $supervisorDuties->where("mark_problems_post","incomplete")->count();
+        //returning_ambassadors_post
+         $data['returning_ambassadors_post'][]= $supervisorDuties->where("returning_ambassadors_post","تم المتابعة")->count();
+         $data['returning_ambassadors_post'][]= $supervisorDuties->where("returning_ambassadors_post","تم المتابعة بعد 3 أيام")->count();
+         $data['returning_ambassadors_post'][]= $supervisorDuties->where("returning_ambassadors_post","لم تتم المتابعة")->count();
+        //new_ambassadors_post
+        $data['new_ambassadors_post'][]= $supervisorDuties->where("new_ambassadors_post","تم المتابعة")->count();
+        $data['new_ambassadors_post'][]= $supervisorDuties->where("new_ambassadors_post","نقص في المتابعة")->count();
+        //withdrawn_ambassadors_post
+         $data['withdrawn_ambassadors_post'][]= $supervisorDuties->where("withdrawn_ambassadors_post","تم المتابعة")->count();
+         $data['withdrawn_ambassadors_post'][]= $supervisorDuties->where("withdrawn_ambassadors_post","تم المتابعة وتنبيه غير المتفاعلين")->count();
+         $data['withdrawn_ambassadors_post'][]= $supervisorDuties->where("withdrawn_ambassadors_post","لم تتم المتابعة")->count();
+        //leader_training
+         $data['leader_training'][]= $supervisorDuties->where("leader_training","published")->count();
+         $data['leader_training'][]= $supervisorDuties->where("leader_training","didnt publish")->count();
+         $data['leader_training'][]= $supervisorDuties->where("leader_training","none")->count();
+         $data['leader_training'][]= $supervisorDuties->where("leader_training","incomplete")->count();
+        //discussion_post
+         $data['discussion_post'][]= $supervisorDuties->where("discussion_post","published")->count();
+         $data['discussion_post'][]= $supervisorDuties->where("discussion_post","didnt publish")->count();
+         $data['discussion_post'][]= $supervisorDuties->where("discussion_post","none")->count();
+         $data['discussion_post'][]= $supervisorDuties->where("discussion_post","incomplete")->count();
+      
+
+        $data = json_encode($data);
+        return view('duties.display-supervising-team',compact('data'));//'teams','teamsFinalMark'));
+
+    }
+
+    public function supervisorDuty()
+    { 
+        $advisor = Advisor::where('user_id',Auth::id())->first();
+        $supervisors = Supervisor::where('current_advisor',$advisor->id)->get();
+        return view('duties.super-duties',compact('supervisors'));
+    }
+
+    public function supervisorDutyStore(Request $request)
+    {
+        $request->validate([
+            'supervisor_id'=> 'required',
+            'supervisor_reading'=> 'required',
+        ]);
+        $current_week = Week::latest()->pluck('id')->first();
+        $advisor = Advisor::where('user_id',Auth::id())->first(); 
+        SupervisorTask::updateOrCreate(
+            ['supervisor_id' => $request->supervisor_id , "week_id" => $current_week],
+            ['advisor_id' => $request->advisor_id,
+            'advisor_id' => $advisor->id,
+            'thursday_task' => ($request->supervisor_duties && in_array('thursday_task', $request->supervisor_duties)) ? 1 : 0,
+            'final_mark_screenshot' => ($request->supervisor_duties && in_array('final_mark_screenshot', $request->supervisor_duties)) ? 1 : 0,
+            'final_mark_confirm' => ($request->supervisor_duties && in_array('final_mark_confirm', $request->supervisor_duties)) ? 1 : 0,
+            'supervisor_reading' => $request->supervisor_reading,
+            'points' => ($request->supervisor_duties) ? count($request->supervisor_duties)*2 : 0,
+            'no_of_pages' => ($request->no_of_pages) ? $request->no_of_pages : 0
+        ]);
+
+        return redirect()->back();
+    }
+
      /**
      * Bring all supervisors of Auth advisor to show supervisors in view (duties.supervising-team).
      * @return supervisors;
      */
+
     public function supervisingTeam()
     { 
         $supervisors = Supervisor::where('current_advisor',auth()->user()->advisor->id)->get();
