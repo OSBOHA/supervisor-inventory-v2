@@ -17,9 +17,9 @@ class SupervisorDutyController extends Controller
     
     public function displaySupervisingTeam()
     { 
-        $advisor = Advisor::findOrFail(Auth::id());
-        $supervisorsIDs = $advisor->supervisors->pluck('id')->toArray();
-        $supervisorDuties= SupervisorDuty::whereIn("supervisor_id" ,$supervisorsIDs)->get();
+        $current_week = Week::latest()->pluck('id')->first();
+        $supervisorsIDs = auth()->user()->advisor->supervisors->pluck('id')->toArray();
+        $supervisorDuties= SupervisorDuty::whereIn("supervisor_id" ,$supervisorsIDs)->where("week_id", $current_week)->get();
 
         foreach ($supervisorDuties as $SupervisorDuty){
             $data['teams'][] = $SupervisorDuty->supervisor->team . "-". $SupervisorDuty->leader_members ." leaders";
@@ -65,8 +65,7 @@ class SupervisorDutyController extends Controller
 
     public function supervisorDuty()
     { 
-        $advisor = Advisor::where('user_id',Auth::id())->first();
-        $supervisors = Supervisor::where('current_advisor',$advisor->id)->get();
+        $supervisors = Supervisor::where('current_advisor',auth()->user()->advisor->id)->get();
         return view('duties.super-duties',compact('supervisors'));
     }
 
@@ -80,8 +79,7 @@ class SupervisorDutyController extends Controller
         $advisor = Advisor::where('user_id',Auth::id())->first(); 
         SupervisorTask::updateOrCreate(
             ['supervisor_id' => $request->supervisor_id , "week_id" => $current_week],
-            ['advisor_id' => $request->advisor_id,
-            'advisor_id' => $advisor->id,
+            ['advisor_id' => auth()->user()->advisor->id,
             'thursday_task' => ($request->supervisor_duties && in_array('thursday_task', $request->supervisor_duties)) ? 1 : 0,
             'final_mark_screenshot' => ($request->supervisor_duties && in_array('final_mark_screenshot', $request->supervisor_duties)) ? 1 : 0,
             'final_mark_confirm' => ($request->supervisor_duties && in_array('final_mark_confirm', $request->supervisor_duties)) ? 1 : 0,
@@ -102,8 +100,6 @@ class SupervisorDutyController extends Controller
     { 
         $supervisors = Supervisor::where('current_advisor',auth()->user()->advisor->id)->get();
         return view('duties.supervising-team',compact('supervisors'));
-
-      
     }
 
      /**
